@@ -2,6 +2,5 @@
 
 Manipulation capabilities and services.
 
-## Launch the simulated environment 
-
-- `roslaunch villa_launch simulated_stage1_task1.launch`
+## Execute the Task space region planning for opening door 
+- `rosrun manipulation_tutorials open_hinged_door.py`
