@@ -1,0 +1,58 @@
+sudo: required
+dist: trusty
+# Force travis to use its minimal image with default Python settings
+language: generic
+group: deprecated-2017Q3
+compiler:
+  - gcc
+env:
+  global:
+    - CATKIN_WS=~/catkin_ws
+    - CATKIN_WS_SRC=${CATKIN_WS}/src
+    - ROS_HOME=~/
+    - TMC_ROOT=/opt/tmc/ros
+    - SSH_ORG_PREFIX=ssh://git@github.com:/AustinVillaatHome
+  matrix:
+    - CI_ROS_DISTRO="indigo"
+
+before_install:
+  # Install ROS and TMC packages
+  - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+  - sudo sh -c 'echo "deb https://hsr-user:jD3k4G2e@packages.hsr.io/ros/ubuntu trusty main" > /etc/apt/sources.list.d/tmc.list'
+  - sudo sh -c 'echo "deb https://hsr-user:jD3k4G2e@packages.hsr.io/tmc/ubuntu trusty multiverse main" >> /etc/apt/sources.list.d/tmc.list'
+  - wget https://hsr-user:jD3k4G2e@packages.hsr.io/tmc.key -O - | sudo apt-key add -
+  - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+
+install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq --allow-unauthenticated ros-indigo-tmc-desktop-full
+  - sudo apt-get install -qq -y python-rosdep python-catkin-tools python-wstool python-rosdep ninja-build
+    # Install packages that are robot specific, which don't come with ros-indigo-tmc
+  - git clone $SSH_ORG_PREFIX/villa_tmc_robot_mirror.git ~/robot_only
+  - sudo mv ~/robot_only $TMC_ROOT/$CI_ROS_DISTRO/share/robot-only
+    # Some of the Villa packages declare dependencies to TMC code. Need to make sure that it's
+    # on the catkin package path.
+  - source $TMC_ROOT/$CI_ROS_DISTRO/setup.bash
+  - sudo rosdep init
+  - rosdep update
+    # Use rosdep to install all dependencies (including ROS itself)
+    # Will ignore dependencies that we have in source form and ignore any failures.
+  - rosdep install --from-paths ./ --ignore-packages-from-source -y --rosdistro $CI_ROS_DISTRO -r
+
+before_script:
+    # Some packages want to put things here by default
+  - mkdir -p ~/.ros/
+  - source /opt/ros/$CI_ROS_DISTRO/setup.bash
+  - source $TMC_ROOT/$CI_ROS_DISTRO/setup.bash
+  - mkdir -p $CATKIN_WS_SRC
+  - ln -s $TRAVIS_BUILD_DIR $CATKIN_WS_SRC
+  - cd $CATKIN_WS
+  - catkin init
+  - catkin config --space-suffix _cb --cmake-args -DCMAKE_BUILD_TYPE=Release  
+
+script:
+  - cd $CATKIN_WS
+  # Build [and Install] packages, build tests, and run tests
+  - catkin build && catkin run_tests
+  # Check results
+  - catkin_test_results --verbose ./build_cb

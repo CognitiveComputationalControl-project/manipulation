@@ -1,0 +1,31 @@
+<launch>
+  <arg name="idx" default="0" />
+
+  <!-- send ant urdf to param server -->
+  <param name="collision_pair_file"
+         value="$(find hsrb_description)/robots/collision_pair_hsrb.xml" />
+
+  <!-- start planning server -->
+  <node name="hsrb_planner_$(arg idx)"
+        pkg="tmc_robot_rrt_planner_node"
+        type="robot_rrt_planner_node"
+        output="screen">
+    <param name="delta" value="0.2" />
+    <param name="sub_delta" value="0.01" />
+    <param name="publish_debug_info" value="false" />
+    <param name="save_request" value="true" />
+    <param name="step_mode" value="false" />
+    <param name="weight_linear_base" value="3.0" />
+    <param name="weight_linear_base_ik" value="3.0" />
+    <param name="weight_rotational_base" value="3.0" />
+    <param name="weight_rotational_base_ik" value="1.0" />
+    <param name="step_sampling_deviation" value="0.2" />
+    <rosparam param="ik_plugins">
+      - "hsrb_analytic_ik::HsrbIKSolver"
+    </rosparam>
+    <remap from="/plan_with_hand_line" to="plan_with_hand_line_$(arg idx)" />
+    <remap from="/plan_with_hand_goals" to="plan_with_hand_goals_$(arg idx)" />
+    <remap from="/plan_with_constraints" to="plan_with_contraints_$(arg idx)" />
+    <remap from="/plan_with_joint_goals" to="plan_with_joint_goals_$(arg idx)" /> 
+  </node> 
+</launch>

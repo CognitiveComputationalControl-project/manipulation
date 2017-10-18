@@ -4,3 +4,513 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ActivationCallback_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  void ActivationCallback_(const std_msgs::BoolConstPtr& msg) {$/;"	f	class:GazedPointFixing	file:
+BWISegmentation	villa_manipulation/villa_manipulation/src/villa_manipulation/bwi_perception_module.py	/^class BWISegmentation:$/;"	c
+BasicGraspPlanner	villa_manipulation/villa_manipulation/src/villa_manipulation/basic_grasp_planner.py	/^class BasicGraspPlanner:$/;"	c
+CONFIG	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^CONFIG = {$/;"	v
+Client	villa_manipulation/manipulation_tutorials/src/arm_actionlib.cpp	/^typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> Client;$/;"	t	file:
+Client	villa_manipulation/manipulation_tutorials/src/arm_trajectory.cpp	/^typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> Client;$/;"	t	file:
+Client	villa_manipulation/manipulation_tutorials/src/gripper_actionlib.cpp	/^typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> Client;$/;"	t	file:
+Client	villa_manipulation/manipulation_tutorials/src/gripper_actionlib_grasp.cpp	/^typedef actionlib::SimpleActionClient<tmc_control_msgs::GripperApplyEffortAction> Client;$/;"	t	file:
+Client	villa_manipulation/manipulation_tutorials/src/head_actionlib.cpp	/^typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> Client;$/;"	t	file:
+Client	villa_manipulation/manipulation_tutorials/src/omni_actionlib.cpp	/^typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> Client;$/;"	t	file:
+ComputeGazeTargetPointHeadAngle_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  bool ComputeGazeTargetPointHeadAngle_(const geometry_msgs::Pose& origin_to_robot,$/;"	f	class:GazedPointFixing	file:
+CountdownTimer	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^class CountdownTimer:$/;"	c
+D	dmp/script/sample.py	/^    D = 2.0 * np.sqrt(K)      $/;"	v
+DMP_H_	dmp/include/dmp/dmp.h	42;"	d
+DMP_Manager	dmp_manipulation/include/dmp_manager.h	/^class DMP_Manager{$/;"	c
+DMP_Manager	dmp_manipulation/src/dmp_manager.cpp	/^DMP_Manager::DMP_Manager(){$/;"	f	class:DMP_Manager
+DetectedObject	villa_manipulation/villa_manipulation/src/villa_manipulation/bwi_perception_module.py	/^class DetectedObject:$/;"	c
+Dgains	dmp_manipulation/include/dmp_manager.h	/^    stvd Dgains;$/;"	m	class:DMP_Manager
+FILE_NAME	villa_common/report_generation/scripts/report_generator	/^FILE_NAME = ""$/;"	v
+FOURIER_APPROX_H_	dmp/include/dmp/fourier_approx.h	42;"	d
+FUNCTION_APPROX_H_	dmp/include/dmp/function_approx.h	42;"	d
+FastMove	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^class FastMove(object):$/;"	c
+Fixing	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  void Fixing() {$/;"	f	class:GazedPointFixing
+ForceSensorCapture	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^class ForceSensorCapture(object):$/;"	c
+FourierApprox	dmp/include/dmp/fourier_approx.h	/^class FourierApprox : public FunctionApprox{$/;"	c	namespace:dmp
+FourierApprox	dmp/src/fourier_approx.cpp	/^FourierApprox::FourierApprox(const vector<double> &w)$/;"	f	class:dmp::FourierApprox
+FourierApprox	dmp/src/fourier_approx.cpp	/^FourierApprox::FourierApprox(int order)$/;"	f	class:dmp::FourierApprox
+FunctionApprox	dmp/include/dmp/function_approx.h	/^	FunctionApprox(){};$/;"	f	class:dmp::FunctionApprox
+FunctionApprox	dmp/include/dmp/function_approx.h	/^class FunctionApprox {$/;"	c	namespace:dmp
+GazedPointFixing	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  GazedPointFixing() :$/;"	f	class:GazedPointFixing
+GazedPointFixing	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^class GazedPointFixing {$/;"	c	file:
+GroovyMotion	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^class GroovyMotion(object):$/;"	c
+HANDLE_POS	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^HANDLE_POS = (0.54, 0.0, 0.94)$/;"	v
+HANDLE_TO_DOOR_HINGE_POS	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^HANDLE_TO_DOOR_HINGE_POS = 0.70$/;"	v
+HANDLE_TO_HANDLE_HINGE_POS	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^HANDLE_TO_HANDLE_HINGE_POS = -0.09$/;"	v
+HANDLE_TO_HAND_POS	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^HANDLE_TO_HAND_POS = 0.16$/;"	v
+ImageToPDF	villa_common/report_generation/scripts/report_generator	/^def ImageToPDF(image, name):$/;"	f
+Init_parameters	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::Init_parameters()$/;"	f	class:DMP_Manager
+JointLimitException	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^class JointLimitException(Exception):$/;"	c
+JointStateCallback_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  void JointStateCallback_(const sensor_msgs::JointState& msg) {$/;"	f	class:GazedPointFixing	file:
+JointStates_traj	dmp_manipulation/include/dmp_manager.h	/^    sensor_msgs::JointState JointStates_traj;$/;"	m	class:DMP_Manager
+JointTrajectoryset	dmp_manipulation/include/dmp_manager.h	/^    vector< stvd >          JointTrajectoryset;       \/\/[time x joint number]$/;"	m	class:DMP_Manager
+K	dmp/script/sample.py	/^    K = 100                 $/;"	v
+Kgains	dmp_manipulation/include/dmp_manager.h	/^    stvd Kgains;$/;"	m	class:DMP_Manager
+LINEAR_APPROX_H_	dmp/include/dmp/linear_approx.h	42;"	d
+LinearApprox	dmp/include/dmp/linear_approx.h	/^class LinearApprox : public FunctionApprox{$/;"	c	namespace:dmp
+LinearApprox	dmp/src/linear_approx.cpp	/^LinearApprox::LinearApprox()$/;"	f	class:dmp::LinearApprox
+LinearApprox	dmp/src/linear_approx.cpp	/^LinearApprox::LinearApprox(std::vector<double> X, std::vector<double> Y)$/;"	f	class:dmp::LinearApprox
+MAX_PLAN_LENGTH	dmp/src/dmp.cpp	47;"	d	file:
+MoveAttachedObjectDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_attached_object_demo.py	/^class MoveAttachedObjectDemo(object):$/;"	c
+MoveItCartesianDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_demo.py	/^class MoveItCartesianDemo(object):$/;"	c
+MoveItConstraintsDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_constraints_demo.py	/^class MoveItConstraintsDemo(object):$/;"	c
+MoveItFKDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_fk_demo.py	/^class MoveItFKDemo(object):$/;"	c
+MoveItIKDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_ik_demo.py	/^class MoveItIKDemo(object):$/;"	c
+MoveItObstaclesDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_obstacles_demo.py	/^class MoveItObstaclesDemo(object):$/;"	c
+MoveItPickAndPlaceDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^class MoveItPickAndPlaceDemo(object):$/;"	c
+MoveItSpeedDemo	villa_manipulation/manipulation_tutorials/scripts/moveit_speed_demo.py	/^class MoveItSpeedDemo(object):$/;"	c
+PI	dmp/include/dmp/fourier_approx.h	/^const double PI = 3.14159265359;$/;"	m	namespace:dmp
+ParallelPlannerServer	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^class ParallelPlannerServer:$/;"	c
+ParallelSequencePlanner	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/parallel_sequence_planner.py	/^class ParallelSequencePlanner(object):$/;"	c
+RADIAL_APPROX_H_	dmp/include/dmp/radial_approx.h	42;"	d
+RadialApprox	dmp/include/dmp/radial_approx.h	/^class RadialApprox : public FunctionApprox{$/;"	c	namespace:dmp
+RadialApprox	dmp/src/radial_approx.cpp	/^RadialApprox::RadialApprox(const vector<double> &w, double base_width, double alpha)$/;"	f	class:dmp::RadialApprox
+RadialApprox	dmp/src/radial_approx.cpp	/^RadialApprox::RadialApprox(int num_bases, double base_width, double alpha)$/;"	f	class:dmp::RadialApprox
+Run	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^void Run() {$/;"	f
+SAVE_NAME	villa_common/report_generation/scripts/report_generator	/^SAVE_NAME = ""$/;"	v
+SAVE_PATH	villa_common/report_generation/scripts/report_generator	/^SAVE_PATH = ""$/;"	v
+SequencePlanner	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^class SequencePlanner(object):$/;"	c
+StringOnImage	villa_common/report_generation/scripts/report_generator	/^def StringOnImage(stringFile, imageFile, result):$/;"	f
+TFBroadcaster	villa_manipulation/villa_manipulation/scripts/tf_broadcaster	/^class TFBroadcaster(object):$/;"	c
+TargetPointCallback_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  void TargetPointCallback_(const geometry_msgs::PointConstPtr& point) {$/;"	f	class:GazedPointFixing	file:
+TimeoutException	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^class TimeoutException(Exception):$/;"	c
+VLogger	villa_common/villa_helpers/scripts/vlogger	/^class VLogger(object):$/;"	c
+_BASE_TRAJECTORY_ORIGIN	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_BASE_TRAJECTORY_ORIGIN = "odom"$/;"	v
+_CONNECTION_TIMEOUT	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^_CONNECTION_TIMEOUT = 10.0$/;"	v
+_CONNECTION_TIMEOUT	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^_CONNECTION_TIMEOUT = 10.0$/;"	v
+_DEBUG	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_DEBUG = False$/;"	v
+_GRASP_PLANNER_SRV_NAME	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^_GRASP_PLANNER_SRV_NAME = '\/get_grasp_pattern'$/;"	v
+_HAND_TF	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_HAND_TF = 'hand_palm_link'$/;"	v
+_INV_PERSPECTIVE_TRANSFORM_SRV_NAME	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^_INV_PERSPECTIVE_TRANSFORM_SRV_NAME = '\/inverse_perspective_transform'$/;"	v
+_ORIGIN_TF	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_ORIGIN_TF ='map'$/;"	v
+_PLANNING_ARM_TIMEOUT	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_PLANNING_ARM_TIMEOUT = 10.0$/;"	v
+_PLANNING_GOAL_DEVIATION	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_PLANNING_GOAL_DEVIATION = 0.3$/;"	v
+_PLANNING_GOAL_DEVIATION	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_PLANNING_GOAL_DEVIATION = 0.3$/;"	v
+_PLANNING_GOAL_GENERATION	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_PLANNING_GOAL_GENERATION = 0.3$/;"	v
+_PLANNING_GOAL_GENERATION	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_PLANNING_GOAL_GENERATION = 0.3$/;"	v
+_PLANNING_MAX_ITERATION	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_PLANNING_MAX_ITERATION = 10000$/;"	v
+_PLANNING_MAX_ITERATION	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_PLANNING_MAX_ITERATION = 10000$/;"	v
+_ROBOT_TF	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_ROBOT_TF = 'base_footprint'$/;"	v
+_TARGET_POINT_X	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^_TARGET_POINT_X = 290.0$/;"	v
+_TARGET_POINT_Y	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^_TARGET_POINT_Y = 290.0$/;"	v
+_TF_TIMEOUT	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_TF_TIMEOUT = 3.0$/;"	v
+_TF_TIMEOUT	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^_TF_TIMEOUT = 1.0$/;"	v
+_USE_JOINTS	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^_USE_JOINTS = ($/;"	v
+_VIEW_POSITIONS	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^_VIEW_POSITIONS = {'head_pan_joint': -1.0,$/;"	v
+__configure_pose	villa_manipulation/villa_manipulation/scripts/tf_broadcaster	/^    def __configure_pose(self, t, msg):$/;"	m	class:TFBroadcaster	file:
+__construct_future	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^    def __construct_future(self, client, joint_names, target_positions):$/;"	m	class:GroovyMotion	file:
+__euclid_dist	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    def __euclid_dist(self, p1, p2):$/;"	m	class:FastMove	file:
+__ft_sensor_cb	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^	def __ft_sensor_cb(self, data):$/;"	m	class:ForceSensorCapture	file:
+__global_pose_cb	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    def __global_pose_cb(self, pose):$/;"	m	class:FastMove	file:
+__handle_broadcast_request	villa_manipulation/villa_manipulation/scripts/tf_broadcaster	/^    def __handle_broadcast_request(self, req):$/;"	m	class:TFBroadcaster	file:
+__init__	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^    def __init__(self, start_stamp, duration, position, frame_id):$/;"	m	class:CountdownTimer
+__init__	villa_common/villa_helpers/scripts/vlogger	/^    def __init__(self, base_dir):$/;"	m	class:VLogger
+__init__	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    def __init__(self, omni_base):$/;"	m	class:FastMove
+__init__	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^    def __init__(self):$/;"	m	class:GroovyMotion
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_attached_object_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveAttachedObjectDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_constraints_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItConstraintsDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItCartesianDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_fk_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItFKDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_ik_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItIKDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_obstacles_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItObstaclesDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItPickAndPlaceDemo
+__init__	villa_manipulation/manipulation_tutorials/scripts/moveit_speed_demo.py	/^    def __init__(self, wait=0.0):$/;"	m	class:MoveItSpeedDemo
+__init__	villa_manipulation/villa_manipulation/scripts/dropOff_service.py	/^	def __init__(self):$/;"	m	class:setRobot
+__init__	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^	def __init__(self):$/;"	m	class:ForceSensorCapture
+__init__	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^	def __init__(self):$/;"	m	class:setRobot
+__init__	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^	def __init__(self):$/;"	m	class:setRobot
+__init__	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^	def __init__(self):$/;"	m	class:setRobot
+__init__	villa_manipulation/villa_manipulation/scripts/tf_broadcaster	/^    def __init__(self):$/;"	m	class:TFBroadcaster
+__init__	villa_manipulation/villa_manipulation/src/villa_manipulation/basic_grasp_planner.py	/^    def __init__(self):$/;"	m	class:BasicGraspPlanner
+__init__	villa_manipulation/villa_manipulation/src/villa_manipulation/bwi_perception_module.py	/^    def __init__(self):$/;"	m	class:BWISegmentation
+__init__	villa_manipulation/villa_manipulation/src/villa_manipulation/bwi_perception_module.py	/^    def __init__(self, x, y, z, w, l, h, bbox=None, label=''):$/;"	m	class:DetectedObject
+__init__	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    def __init__(self):$/;"	m	class:hsrb_segmentation
+__init__	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    def __init__(self,x,y,z,w,l,h,xlist,ylist,zlist):$/;"	m	class:detectedObject
+__init__	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    def __init__(self):$/;"	m	class:ParallelPlannerServer
+__init__	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/parallel_sequence_planner.py	/^    def __init__(self, hand_goal_service, hand_line_service, n):$/;"	m	class:ParallelSequencePlanner
+__init__	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def __init__(self, hand_goal_service, hand_line_service):$/;"	m	class:SequencePlanner
+__mkdirp	villa_common/villa_helpers/scripts/vlogger	/^    def __mkdirp(self, path):$/;"	m	class:VLogger	file:
+__quaternion_dist	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    def __quaternion_dist(self, q1, q2):$/;"	m	class:FastMove	file:
+_cb	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^        def _cb(data):$/;"	f	function:GroovyMotion.__init__
+_command_gripper	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _command_gripper(self, open_angle, motion_time=1.0):$/;"	m	class:SequencePlanner
+_constrain_trajectories	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _constrain_trajectories(self, joint_trajectory, base_trajectory, odom_to_robot_pose):$/;"	m	class:SequencePlanner
+_final_joint_state	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _final_joint_state(self, traj):$/;"	m	class:SequencePlanner
+_final_odom_to_robot_pose	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _final_odom_to_robot_pose(self, traj):$/;"	m	class:SequencePlanner
+_get_collision_env	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    def _get_collision_env(self, ref_frame_id=None):$/;"	m	class:ParallelPlannerServer
+_get_joint_state	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    def _get_joint_state(self):$/;"	m	class:ParallelPlannerServer
+_is_robot_action	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _is_robot_action(self, type):$/;"	m	class:SequencePlanner
+_is_world_action	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _is_world_action(self, type):$/;"	m	class:SequencePlanner
+_lookup_odom_to_ref	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    def _lookup_odom_to_ref(self, ref_frame_id):$/;"	m	class:ParallelPlannerServer
+_move_end_effector_by_line	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _move_end_effector_by_line(self, axis, distance, odom_to_robot_pose, initial_joint_state, collision_env=None):$/;"	m	class:SequencePlanner
+_move_end_effector_pose	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _move_end_effector_pose(self, odom_to_hand_pose, odom_to_robot_pose, initial_joint_state, collision_env=None):$/;"	m	class:SequencePlanner
+_plan_robot_action	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _plan_robot_action(self, action, odom_to_robot_pose, initial_joint_state, collision_env=None):$/;"	m	class:SequencePlanner
+_plan_world_action	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _plan_world_action(self, action, collision_env):$/;"	m	class:SequencePlanner
+_remove_object	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _remove_object(self, object_id, collision_env):$/;"	m	class:SequencePlanner
+_transform_base_trajectory	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _transform_base_trajectory(self, base_traj, odom_to_frame_pose):$/;"	m	class:SequencePlanner
+_update_robot_state	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def _update_robot_state(self, type, traj, robot_state):$/;"	m	class:SequencePlanner
+activation_sub_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  ros::Subscriber activation_sub_;$/;"	m	class:GazedPointFixing	file:
+activeCallback	dmp/nodes/dmp_server.cpp	/^bool activeCallback(SetActiveDMP::Request &req,$/;"	f
+add_box	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def add_box(self, name, size, pos):$/;"	m	class:MoveItPickAndPlaceDemo
+add_cylinder	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def add_cylinder(self, name, radius, height, pos):$/;"	m	class:MoveItPickAndPlaceDemo
+alpha	dmp/src/dmp.cpp	/^double alpha = -log(0.01); \/\/Ensures 99% phase convergence at t=tau$/;"	m	namespace:dmp	file:
+armBindings	villa_common/villa_teleop/scripts/keyboard_teleop	/^armBindings = {$/;"	v
+arm_flex_joint	dmp_manipulation/include/dmp_manager.h	44;"	d
+arm_lift_joint	dmp_manipulation/include/dmp_manager.h	45;"	d
+arm_roll_joint	dmp_manipulation/include/dmp_manager.h	46;"	d
+base	villa_common/villa_demos/scripts/example_move.py	/^base = robot.try_get('omni_base')$/;"	v
+base	villa_common/villa_demos/scripts/example_speech.py	/^base = robot.try_get('omni_base')$/;"	v
+basic_info	villa_common/report_generation/scripts/report_generator	/^def basic_info(path, tryNum):$/;"	f
+basisTrajectory	dmp_manipulation/include/dmp_manager.h	/^    ofstream basisTrajectory;$/;"	m	class:DMP_Manager
+bridge	villa_common/villa_helpers/scripts/capture_images	/^bridge = CvBridge()$/;"	v
+calcFeatures	dmp/src/fourier_approx.cpp	/^void FourierApprox::calcFeatures(double x)$/;"	f	class:dmp::FourierApprox
+calcFeatures	dmp/src/radial_approx.cpp	/^void RadialApprox::calcFeatures(double x)$/;"	f	class:dmp::RadialApprox
+calcPhase	dmp/src/dmp.cpp	/^double calcPhase(double curr_time, double tau)$/;"	f	namespace:dmp
+call_tsr_plan_service	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^def call_tsr_plan_service(whole_body, constraint_tsrs, goal_tsrs):$/;"	f
+callback	villa_common/villa_helpers/scripts/get_battery_state_value	/^def callback(data):$/;"	f
+camera_topics	villa_common/villa_helpers/scripts/capture_images	/^camera_topics = {"\/hsrb\/hand_camera\/image_rect": "hand",$/;"	v
+capture_next	villa_common/villa_helpers/scripts/capture_images	/^capture_next = None$/;"	v
+centers	dmp/include/dmp/radial_approx.h	/^	double *centers;   \/\/Centers of RBFs$/;"	m	class:dmp::RadialApprox
+clearObjects	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    def clearObjects(self):$/;"	m	class:hsrb_segmentation
+cli	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/arm_trajectory_controller\/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)$/;"	v
+cli	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/arm_trajectory_controller\/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)$/;"	v
+cli	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/gripper_controller\/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)$/;"	v
+cli	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_grasp.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/gripper_controller\/grasp', tmc_control_msgs.msg.GripperApplyEffortAction)$/;"	v
+cli	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_trajectory.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/gripper_controller\/grasp', tmc_control_msgs.msg.GripperApplyEffortAction)$/;"	v
+cli	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/head_trajectory_controller\/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)$/;"	v
+cli	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^cli = actionlib.SimpleActionClient('\/hsrb\/omni_base_controller\/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)$/;"	v
+client_gdp	dmp_manipulation/include/dmp_manager.h	/^    ros::ServiceClient client_gdp;$/;"	m	class:DMP_Manager
+client_lfd	dmp_manipulation/include/dmp_manager.h	/^    ros::ServiceClient client_lfd;$/;"	m	class:DMP_Manager
+client_sap	dmp_manipulation/include/dmp_manager.h	/^    ros::ServiceClient client_sap;$/;"	m	class:DMP_Manager
+compute_difference	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^def compute_difference(pre_data_list, post_data_list):$/;"	f
+construct_marker	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^def construct_marker(timer_id, seconds_left, position, frame_id):$/;"	f
+convertImage	villa_common/report_generation/scripts/report_generator	/^def convertImage(message):$/;"	f
+count	villa_common/villa_helpers/scripts/capture_images	/^count = 0$/;"	v
+countdown_labels_pub	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^    countdown_labels_pub = rospy.Publisher("countdown_timers", MarkerArray, queue_size=10)$/;"	v
+current_count	villa_common/villa_demos/scripts/example_speech.py	/^        current_count = i+1$/;"	v
+current_joint_state_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  sensor_msgs::JointState current_joint_state_;$/;"	m	class:GazedPointFixing	file:
+detectedObject	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^class detectedObject:$/;"	c
+dimension	dmp_manipulation/include/dmp_manager.h	/^    int dimension;$/;"	m	class:DMP_Manager
+dims	dmp/script/sample.py	/^    dims = 2                $/;"	v
+dmp	dmp/include/dmp/dmp.h	/^namespace dmp{$/;"	n
+dmp	dmp/include/dmp/fourier_approx.h	/^namespace dmp{$/;"	n
+dmp	dmp/include/dmp/function_approx.h	/^namespace dmp{$/;"	n
+dmp	dmp/include/dmp/linear_approx.h	/^namespace dmp{$/;"	n
+dmp	dmp/include/dmp/radial_approx.h	/^namespace dmp{$/;"	n
+dmp	dmp/src/dmp.cpp	/^namespace dmp{$/;"	n	file:
+dmp	dmp/src/fourier_approx.cpp	/^namespace dmp{$/;"	n	file:
+dmp	dmp/src/linear_approx.cpp	/^namespace dmp{$/;"	n	file:
+dmp	dmp/src/radial_approx.cpp	/^namespace dmp{$/;"	n	file:
+dmp_pub	dmp_manipulation/include/dmp_manager.h	/^	ros::Publisher dmp_pub;$/;"	m	class:DMP_Manager
+dropOff	villa_manipulation/villa_manipulation/scripts/dropOff_service.py	/^def dropOff(req):$/;"	f
+dt	dmp/script/sample.py	/^    dt = 1.0                $/;"	v
+dt	dmp/script/sample.py	/^    dt = 1.0$/;"	v
+dvorakTranslator	villa_common/villa_teleop/scripts/keyboard_teleop	/^dvorakTranslator = {'a': 'a',$/;"	v
+evalAt	dmp/src/fourier_approx.cpp	/^double FourierApprox::evalAt(double x)$/;"	f	class:dmp::FourierApprox
+evalAt	dmp/src/linear_approx.cpp	/^double LinearApprox::evalAt(double x)$/;"	f	class:dmp::LinearApprox
+evalAt	dmp/src/radial_approx.cpp	/^double RadialApprox::evalAt(double x)$/;"	f	class:dmp::RadialApprox
+execute_trajectory	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^    def execute_trajectory(self, trajectory):$/;"	m	class:GroovyMotion
+features	dmp/include/dmp/fourier_approx.h	/^	double *features;  \/\/Storage for a set of features$/;"	m	class:dmp::FourierApprox
+features	dmp/include/dmp/radial_approx.h	/^	double *features;  \/\/Storage for a set of features$/;"	m	class:dmp::RadialApprox
+fileType	villa_common/report_generation/scripts/report_generator	/^fileType = ".pdf"$/;"	v
+finished	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^    def finished(self):$/;"	m	class:CountdownTimer
+fm	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    fm = FastMove(omni_base)$/;"	v	class:FastMove
+format_countdown	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^def format_countdown(timedelta):$/;"	f
+generatePlan	dmp/src/dmp.cpp	/^void generatePlan(const vector<DMPData> &dmp_list,$/;"	f	namespace:dmp
+getKey	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^def getKey():$/;"	f
+getKey	villa_common/villa_helpers/scripts/capture_images	/^def getKey():$/;"	f
+getKey	villa_common/villa_teleop/scripts/keyboard_teleop	/^def getKey(translator=None):$/;"	f
+getNumBases	dmp/include/dmp/function_approx.h	/^	int getNumBases(){return n_bases;}$/;"	f	class:dmp::FunctionApprox
+getWeights	dmp/include/dmp/function_approx.h	/^	std::vector<double> getWeights(){return weights;}$/;"	f	class:dmp::FunctionApprox
+get_current_force	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^	def get_current_force(self):$/;"	m	class:ForceSensorCapture
+get_grasp	villa_manipulation/villa_manipulation/src/villa_manipulation/basic_grasp_planner.py	/^    def get_grasp(object, style='side'):$/;"	m	class:BasicGraspPlanner
+get_grasp_for_pose	villa_manipulation/villa_manipulation/src/villa_manipulation/basic_grasp_planner.py	/^    def get_grasp_for_pose(object, distance_from_object_side=0.04):$/;"	m	class:BasicGraspPlanner
+get_grasp_for_pose_in_base_frame	villa_manipulation/villa_manipulation/src/villa_manipulation/basic_grasp_planner.py	/^    def get_grasp_for_pose_in_base_frame(object, robot_pose, obj_transform, aligned_axis='x',  distance_from_object_side=0.08):$/;"	m	class:BasicGraspPlanner
+get_marker	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^    def get_marker(self):$/;"	m	class:CountdownTimer
+get_next_free_index	villa_common/villa_helpers/scripts/capture_images	/^def get_next_free_index(path, prefixes):$/;"	f
+get_relative_tuples	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^def get_relative_tuples(base_frame, target_frame):$/;"	f
+get_transform	villa_manipulation/villa_manipulation/scripts/dropOff_service.py	/^def get_transform(target, source):$/;"	f
+get_transform	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^def get_transform(target, source):$/;"	f
+get_transform	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^def get_transform(target, source):$/;"	f
+global_pose_callback	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::global_pose_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)$/;"	f	class:DMP_Manager
+go	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    def go(self, x, y, yaw, timeout=0.0, relative=False, angular_thresh=10.0, spatial_thresh=0.1):$/;"	m	class:FastMove
+go_pose	villa_common/villa_teleop/scripts/keyboard_teleop	/^go_pose = {"arm": [0, 0, -1.57, -1.57, 0], "head": [0, 0]}$/;"	v
+go_to	villa_common/villa_demos/scripts/example_move.py	/^def go_to(x,y,theta=0):$/;"	f
+goal	dmp/script/sample.py	/^    goal = [8.0,7.0]         #Plan to a different goal than demo$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^goal = control_msgs.msg.FollowJointTrajectoryGoal()$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^goal = control_msgs.msg.FollowJointTrajectoryGoal()$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^goal = control_msgs.msg.FollowJointTrajectoryGoal()$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_grasp.py	/^goal = tmc_control_msgs.msg.GripperApplyEffortGoal()$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_trajectory.py	/^goal = tmc_control_msgs.msg.GripperApplyEffortGoal()$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^goal = control_msgs.msg.FollowJointTrajectoryGoal()$/;"	v
+goal	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^goal = control_msgs.msg.FollowJointTrajectoryGoal()$/;"	v
+goal_list	villa_common/villa_demos/scripts/example_move.py	/^goal_list = [ (0.5, 0.5,-3.14\/4.0), (0,0,0), (0.5, -0.5, 3.14\/4.0), (0,0,0) ]$/;"	v
+goal_thresh	dmp/script/sample.py	/^    goal_thresh = [0.2,0.2]$/;"	v
+gripper	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^        gripper = robot.get('gripper')$/;"	v
+gripper	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^        gripper = robot.get('gripper')$/;"	v
+gripper_width_for_object_dimension	villa_manipulation/villa_manipulation/src/villa_manipulation/basic_grasp_planner.py	/^    def gripper_width_for_object_dimension(dimension):$/;"	m	class:BasicGraspPlanner
+handBindings	villa_common/villa_teleop/scripts/keyboard_teleop	/^handBindings = {$/;"	v
+handOver_cb	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^def handOver_cb(req):$/;"	f
+headBindings	villa_common/villa_teleop/scripts/keyboard_teleop	/^headBindings = {$/;"	v
+head_kinematics_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  hsr_kinematics::HsrHeadKinematics::Ptr head_kinematics_;$/;"	m	class:GazedPointFixing	file:
+head_trajectory_pub_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  ros::Publisher head_trajectory_pub_;$/;"	m	class:GazedPointFixing	file:
+hsrb_segmentation	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^class hsrb_segmentation:  $/;"	c
+image_callback	villa_common/villa_helpers/scripts/capture_images	/^def image_callback(msg):$/;"	f
+inch	villa_common/report_generation/scripts/report_generator	/^inch = 72$/;"	v
+index	dmp_manipulation/include/dmp_manager.h	/^	int index;$/;"	m	class:DMP_Manager
+integrate_iter	dmp/script/sample.py	/^    integrate_iter = 5       #dt is rather large, so this is > 1  $/;"	v
+is_activating_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  bool is_activating_;$/;"	m	class:GazedPointFixing	file:
+joint_state_callback	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::joint_state_callback(const sensor_msgs::JointState::ConstPtr &msg)$/;"	f	class:DMP_Manager
+joint_state_sub_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  ros::Subscriber joint_state_sub_;$/;"	m	class:GazedPointFixing	file:
+jointtrajectory_pub	dmp_manipulation/include/dmp_manager.h	/^	ros::Publisher jointtrajectory_pub;$/;"	m	class:DMP_Manager
+kOriginLink	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  const char* kOriginLink = "odom";$/;"	m	namespace:__anon1	file:
+kRate	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  const double kRate = 10.0;$/;"	m	namespace:__anon1	file:
+kRobotBaseLink	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  const char* kRobotBaseLink = "base_link";$/;"	m	namespace:__anon1	file:
+keypath	villa_common/villa_helpers/scripts/get_battery_state_value	/^keypath = None$/;"	v
+latest_positions	villa_common/villa_teleop/scripts/keyboard_teleop	/^latest_positions = None$/;"	v
+learnFromDemo	dmp/src/dmp.cpp	/^void learnFromDemo(const DMPTraj &demo,$/;"	f	namespace:dmp
+leastSquaresWeights	dmp/src/fourier_approx.cpp	/^void FourierApprox::leastSquaresWeights(double *X, double *Y, int n_pts)$/;"	f	class:dmp::FourierApprox
+leastSquaresWeights	dmp/src/linear_approx.cpp	/^void LinearApprox::leastSquaresWeights(double *X, double *Y, int n_pts){};$/;"	f	class:dmp::LinearApprox
+leastSquaresWeights	dmp/src/radial_approx.cpp	/^void RadialApprox::leastSquaresWeights(double *X, double *Y, int n_pts)$/;"	f	class:dmp::RadialApprox
+lfdCallback	dmp/nodes/dmp_server.cpp	/^bool lfdCallback(LearnDMPFromDemo::Request  &req,$/;"	f
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/arm_message.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/arm_message_cancel.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_grasp.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_trajectory.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/gripper_message.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/head_message.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/omni_message.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+list_controllers	villa_manipulation/manipulation_tutorials/scripts/omni_message_velocity.py	/^list_controllers = rospy.ServiceProxy('\/hsrb\/controller_manager\/list_controllers', controller_manager_msgs.srv.ListControllers)$/;"	v
+listener	villa_common/villa_helpers/scripts/get_battery_state_value	/^def listener():$/;"	f
+listener_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  tf2_ros::TransformListener listener_;$/;"	m	class:GazedPointFixing	file:
+loadTrajectory	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::loadTrajectory()$/;"	f	class:DMP_Manager
+log	villa_common/villa_helpers/scripts/vlogger	/^    def log(self, req):$/;"	m	class:VLogger
+look_ahead_photo_pose	villa_common/villa_teleop/scripts/keyboard_teleop	/^look_ahead_photo_pose = {"arm": [0.00, 0.00, 0.00, -1.51, 1.60], "head": [0.0, 0.0]}$/;"	v
+look_right_from_above_photo_pose	villa_common/villa_teleop/scripts/keyboard_teleop	/^look_right_from_above_photo_pose = {"arm": [0.60, -0.42, -1.55, -1.57, 2.05], "head": [-1.5, -0.9]}$/;"	v
+look_right_photo_pose	villa_common/villa_teleop/scripts/keyboard_teleop	/^look_right_photo_pose = {"arm": [0.30, -0.42, -1.55, -1.57, 2.05], "head": [-1.5, -0.40]}$/;"	v
+m_dmp_dataset	dmp_manipulation/include/dmp_manager.h	/^    std::vector< dmp::DMPData > m_dmp_dataset;$/;"	m	class:DMP_Manager
+m_dmptrajectory	dmp_manipulation/include/dmp_manager.h	/^    dmp::DMPTraj m_dmptrajectory;$/;"	m	class:DMP_Manager
+m_tau	dmp_manipulation/include/dmp_manager.h	/^    double m_tau;$/;"	m	class:DMP_Manager
+main	dmp/nodes/dmp_server.cpp	/^int main(int argc, char **argv)$/;"	f
+main	dmp_manipulation/src/dmp_test.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_common/report_generation/scripts/report_generator	/^def main():$/;"	f
+main	villa_common/villa_helpers/scripts/vlogger	/^def main():$/;"	f
+main	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^def main(whole_body, gripper):$/;"	f
+main	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^def main(whole_body, gripper):$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/arm_actionlib.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/arm_message.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/arm_trajectory.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^int main(int argc, char** argv) {$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/gripper_actionlib.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/gripper_actionlib_grasp.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/gripper_message.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/head_actionlib.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/head_message.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/omni_actionlib.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/omni_message.cpp	/^int main(int argc, char **argv)$/;"	f
+main	villa_manipulation/manipulation_tutorials/src/omni_message_velocity.cpp	/^int main(int argc, char **argv)$/;"	f
+makeGetPlanRequest	dmp_manipulation/src/dmp_manager.cpp	/^bool DMP_Manager::makeGetPlanRequest(stvd& x_0_, stvd& x_dot_0_, double t_0_, stvd& goal_, stvd& goal_thresh_, double seg_length_, double tau_, double dt_, int integrate_iter_)$/;"	f	class:DMP_Manager
+makeLFDRequest	dmp/script/sample.py	/^def makeLFDRequest(dims, traj, dt, K_gain, $/;"	f
+makeLFDRequest	dmp_manipulation/src/dmp_manager.cpp	/^bool DMP_Manager::makeLFDRequest()$/;"	f	class:DMP_Manager
+makePlanRequest	dmp/script/sample.py	/^def makePlanRequest(x_0, x_dot_0, t_0, goal, goal_thresh, $/;"	f
+makeSetActiveRequest	dmp/script/sample.py	/^def makeSetActiveRequest(dmp_list):$/;"	f
+makeSetActiveRequest	dmp_manipulation/src/dmp_manager.cpp	/^bool DMP_Manager::makeSetActiveRequest()$/;"	f	class:DMP_Manager
+make_filename	villa_common/villa_helpers/scripts/capture_images	/^def make_filename(prefix, count):$/;"	f
+make_grasps	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def make_grasps(self, target, init,$/;"	m	class:MoveItPickAndPlaceDemo
+make_gripper_posture	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def make_gripper_posture(self, pos, effort=0.0):$/;"	m	class:MoveItPickAndPlaceDemo
+make_gripper_translation	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def make_gripper_translation(self, min_dist, desired, vector, frame=None):$/;"	m	class:MoveItPickAndPlaceDemo
+make_pdf_file	villa_common/report_generation/scripts/report_generator	/^def make_pdf_file(output_filename,name, np, date, tryNum):$/;"	f
+make_place_location	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def make_place_location(self, x, y, z):$/;"	m	class:MoveItPickAndPlaceDemo
+make_pose	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def make_pose(self, init, x, y, z, roll, pitch, yaw):$/;"	m	class:MoveItPickAndPlaceDemo
+marker_array	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^        marker_array = MarkerArray()$/;"	v
+mergeMultiplePDFs	villa_common/report_generation/scripts/report_generator	/^def mergeMultiplePDFs(initial, combinedName, outputName, items):$/;"	f
+mergePDFs	villa_common/report_generation/scripts/report_generator	/^def mergePDFs(inputFile1,inputFile2, outputFile):$/;"	f
+move	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    def move(self, pose, timeout=0, ref_frame_id=None, angular_thresh=10.0, spatial_thresh=0.1):$/;"	m	class:FastMove
+moveBindings	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^moveBindings = {$/;"	v
+moveBindings	villa_common/villa_teleop/scripts/keyboard_teleop	/^moveBindings = {$/;"	v
+moveBindingsX	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^moveBindingsX = {$/;"	v
+move_to_joint_positions	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^    def move_to_joint_positions(self, goals):$/;"	m	class:GroovyMotion
+move_to_pose	villa_common/villa_teleop/scripts/keyboard_teleop	/^def move_to_pose(pose):$/;"	f
+mutex_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  mutable boost::mutex mutex_;$/;"	m	class:GazedPointFixing	file:
+n_bases	dmp/include/dmp/function_approx.h	/^	int n_bases;					\/\/The number of bases in the approximator$/;"	m	class:dmp::FunctionApprox
+num_bases	dmp/script/sample.py	/^    num_bases = 4          $/;"	v
+omni_base	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    omni_base = robot.get('omni_base')$/;"	v	class:FastMove
+openGripper	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^def openGripper(obj_width):$/;"	f
+openGripper	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^def openGripper(obj_width):$/;"	f
+origin_to_target_point_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  geometry_msgs::Point origin_to_target_point_;$/;"	m	class:GazedPointFixing	file:
+output_directory	villa_common/villa_helpers/scripts/capture_images	/^output_directory = None$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/arm_message.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/arm_message_cancel.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/gripper_message.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/head_message.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+p	villa_manipulation/manipulation_tutorials/scripts/omni_message.py	/^p = trajectory_msgs.msg.JointTrajectoryPoint()$/;"	v
+package_dir	villa_common/report_generation/setup.py	/^    package_dir={'': 'src'},$/;"	v
+package_dir	villa_common/villa_helpers/setup.py	/^    package_dir={'': 'src'},$/;"	v
+package_dir	villa_manipulation/villa_manipulation/setup.py	/^    package_dir={'': 'src'},$/;"	v
+package_dir	villa_manipulation/villa_parallel_planner/setup.py	/^    package_dir={'': 'src'},$/;"	v
+packages	villa_common/report_generation/setup.py	/^    packages=['report_generation'],$/;"	v
+packages	villa_common/villa_helpers/setup.py	/^    packages=['villa_helpers'],$/;"	v
+packages	villa_manipulation/villa_manipulation/setup.py	/^    packages=['villa_manipulation'],$/;"	v
+packages	villa_manipulation/villa_parallel_planner/setup.py	/^    packages=['villa_parallel_planner'],$/;"	v
+parallel_plan	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    def parallel_plan(self, req):$/;"	m	class:ParallelPlannerServer
+parallel_planner_server	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    parallel_planner_server = ParallelPlannerServer()$/;"	v
+pdfString	villa_common/report_generation/scripts/report_generator	/^def pdfString(title,words):$/;"	f
+pick	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def pick(self, target, grasps):$/;"	m	class:MoveItPickAndPlaceDemo
+pickup	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^def pickup(req):$/;"	f
+pickupFromTable	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^def pickupFromTable(req):$/;"	f
+place	villa_manipulation/manipulation_tutorials/scripts/moveit_pick_and_place_demo.py	/^    def place(self, target, location):$/;"	m	class:MoveItPickAndPlaceDemo
+plan	dmp/script/sample.py	/^    plan = makePlanRequest(x_0, x_dot_0, t_0, goal, goal_thresh, $/;"	v
+planCallback	dmp/nodes/dmp_server.cpp	/^bool planCallback(GetDMPPlan::Request  &req,$/;"	f
+plan_sequence	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/sequence_planner.py	/^    def plan_sequence(self, seq, odom_to_robot_pose, initial_joint_state, collision_env=None):$/;"	m	class:SequencePlanner
+plan_sequences	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/parallel_sequence_planner.py	/^    def plan_sequences(self, seqs, odom_to_robot_pose, initial_joint_state, collision_env):$/;"	m	class:ParallelSequencePlanner
+point	villa_common/report_generation/scripts/report_generator	/^point = 1$/;"	v
+points	dmp/include/dmp/linear_approx.h	/^        std::vector<pt_pair> points;$/;"	m	class:dmp::LinearApprox
+post_process	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    def post_process(self):$/;"	m	class:hsrb_segmentation
+printTrajectory	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::printTrajectory()$/;"	f	class:DMP_Manager
+print_dmp_trajectory	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::print_dmp_trajectory(){$/;"	f	class:DMP_Manager
+pseudoinverse	dmp/src/fourier_approx.cpp	/^MatrixXd FourierApprox::pseudoinverse(MatrixXd mat){$/;"	f	class:dmp::FourierApprox
+pseudoinverse	dmp/src/radial_approx.cpp	/^MatrixXd RadialApprox::pseudoinverse(MatrixXd mat){$/;"	f	class:dmp::RadialApprox
+pt_pair	dmp/include/dmp/linear_approx.h	/^typedef std::pair<double, double> pt_pair;$/;"	t	namespace:dmp
+pub	villa_manipulation/manipulation_tutorials/scripts/arm_message.py	/^pub = rospy.Publisher('\/hsrb\/arm_trajectory_controller\/command', trajectory_msgs.msg.JointTrajectory, queue_size=10)$/;"	v
+pub	villa_manipulation/manipulation_tutorials/scripts/arm_message_cancel.py	/^pub = rospy.Publisher('\/hsrb\/arm_trajectory_controller\/command', trajectory_msgs.msg.JointTrajectory, queue_size=10)$/;"	v
+pub	villa_manipulation/manipulation_tutorials/scripts/gripper_message.py	/^pub = rospy.Publisher('\/hsrb\/gripper_controller\/command', trajectory_msgs.msg.JointTrajectory, queue_size=10)$/;"	v
+pub	villa_manipulation/manipulation_tutorials/scripts/head_message.py	/^pub = rospy.Publisher('\/hsrb\/head_trajectory_controller\/command', trajectory_msgs.msg.JointTrajectory, queue_size=10)$/;"	v
+pub	villa_manipulation/manipulation_tutorials/scripts/omni_message.py	/^pub = rospy.Publisher('\/hsrb\/omni_base_controller\/command', trajectory_msgs.msg.JointTrajectory, queue_size=10)$/;"	v
+pub	villa_manipulation/manipulation_tutorials/scripts/omni_message_velocity.py	/^pub = rospy.Publisher('\/hsrb\/command_velocity', geometry_msgs.msg.Twist, queue_size=10)$/;"	v
+publish_arm	villa_common/villa_teleop/scripts/keyboard_teleop	/^def publish_arm(lift, flex):$/;"	f
+publish_base_velocity	villa_common/villa_teleop/scripts/keyboard_teleop	/^def publish_base_velocity(x, y, th):$/;"	f
+publish_gripper	villa_common/villa_teleop/scripts/keyboard_teleop	/^def publish_gripper(position):$/;"	f
+publish_head	villa_common/villa_teleop/scripts/keyboard_teleop	/^def publish_head(pan, tilt):$/;"	f
+record_cupboard	villa_common/report_generation/scripts/report_generator	/^def record_cupboard(req):$/;"	f
+record_final_cupboard	villa_common/report_generation/scripts/report_generator	/^def record_final_cupboard(req):$/;"	f
+relative_go_to	villa_common/villa_demos/scripts/example_move.py	/^def relative_go_to(x,y):$/;"	f
+resp	dmp/script/sample.py	/^    resp = makeLFDRequest(dims, traj, dt, K, D, num_bases)$/;"	v
+robot	villa_common/villa_demos/scripts/example_move.py	/^robot = Robot()$/;"	v
+robot	villa_common/villa_demos/scripts/example_speech.py	/^robot = Robot()$/;"	v
+robot	villa_common/villa_helpers/src/villa_helpers/fast_move.py	/^    robot = Robot()$/;"	v	class:FastMove
+robot	villa_manipulation/villa_manipulation/scripts/dropOff_service.py	/^	robot = setRobot()$/;"	v
+robot	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^	robot = setRobot()$/;"	v
+robot	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^	robot = setRobot()$/;"	v
+robot	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^	robot = setRobot()$/;"	v
+robot_say	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^def robot_say(string):$/;"	f
+rotate	villa_common/villa_demos/scripts/example_move.py	/^def rotate(rads):$/;"	f
+run	villa_manipulation/villa_parallel_planner/scripts/parallel_planner_service	/^    def run(self):$/;"	m	class:ParallelPlannerServer
+run_planner	villa_manipulation/villa_parallel_planner/src/villa_parallel_planner/parallel_sequence_planner.py	/^    def run_planner(self, i, job_q, ans_q):$/;"	m	class:ParallelSequencePlanner
+running	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_message.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_message.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_message_cancel.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/arm_message_cancel.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_grasp.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_grasp.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_trajectory.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib_trajectory.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_message.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/gripper_message.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/head_message.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/head_message.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/omni_message.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/omni_message.py	/^running = False$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/omni_message_velocity.py	/^            running = True$/;"	v
+running	villa_manipulation/manipulation_tutorials/scripts/omni_message_velocity.py	/^running = False$/;"	v
+s	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^    s = rospy.Service('start_countdown_timer', StartCountdown, start_handler)$/;"	v
+s	villa_manipulation/villa_manipulation/scripts/dropOff_service.py	/^	s = rospy.Service('dropOff', DropOffObject, dropOff)$/;"	v
+s	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^	s = rospy.Service('handOver', handOverObject, handOver_cb)$/;"	v
+s	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^	s = rospy.Service('pickupFromTable', PickupObjectsFromTable2, pickupFromTable)$/;"	v
+s	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^	s = rospy.Service('pickup', PickupObject, pickup)$/;"	v
+saveTrajectory	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::saveTrajectory()$/;"	f	class:DMP_Manager
+saveiter	dmp_manipulation/src/dmp_test.cpp	/^static int saveiter=0;$/;"	v	file:
+seg_length	dmp/script/sample.py	/^    seg_length = -1          #Plan until convergence to goal$/;"	v
+segmentor	villa_manipulation/villa_manipulation/src/villa_manipulation/bwi_perception_module.py	/^    segmentor = BWISegmentation()$/;"	v	class:BWISegmentation
+segmentor	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    segmentor = hsrb_segmentation()$/;"	v	class:hsrb_segmentation
+service_call	villa_manipulation/villa_manipulation/src/villa_manipulation/bwi_perception_module.py	/^    def service_call(self, table):$/;"	m	class:BWISegmentation
+service_call	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    def service_call(self, table, table_width, table_length, process=False ):$/;"	m	class:hsrb_segmentation
+service_call2	villa_manipulation/villa_manipulation/src/villa_manipulation/hsrb_perception_module.py	/^    def service_call2(self, process=False ):$/;"	m	class:hsrb_segmentation
+setRobot	villa_manipulation/villa_manipulation/scripts/dropOff_service.py	/^class setRobot:$/;"	c
+setRobot	villa_manipulation/villa_manipulation/scripts/handOver_service.py	/^class setRobot:$/;"	c
+setRobot	villa_manipulation/villa_manipulation/scripts/pickup_from_table_service.py	/^class setRobot:$/;"	c
+setRobot	villa_manipulation/villa_manipulation/scripts/pickup_service.py	/^class setRobot:$/;"	c
+set_tau	dmp_manipulation/src/dmp_manager.cpp	/^void DMP_Manager::set_tau(double tau_)$/;"	f	class:DMP_Manager
+setup_args	villa_common/report_generation/setup.py	/^setup_args = generate_distutils_setup($/;"	v
+setup_args	villa_common/villa_helpers/setup.py	/^setup_args = generate_distutils_setup($/;"	v
+setup_args	villa_manipulation/villa_manipulation/setup.py	/^setup_args = generate_distutils_setup($/;"	v
+setup_args	villa_manipulation/villa_parallel_planner/setup.py	/^setup_args = generate_distutils_setup($/;"	v
+sort_pt_pair	dmp/src/linear_approx.cpp	/^bool sort_pt_pair(const pt_pair& left, const pt_pair& right)$/;"	f	namespace:dmp
+speed	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^speed = 0.75$/;"	v
+speedBindings	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^speedBindings={$/;"	v
+speedBindings	villa_common/villa_teleop/scripts/keyboard_teleop	/^speedBindings = {$/;"	v
+start_handler	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^def start_handler(req):$/;"	f
+start_theta	villa_common/villa_demos/scripts/example_move.py	/^start_theta = base.pose[2]$/;"	v
+start_x	villa_common/villa_demos/scripts/example_move.py	/^start_x = base.pose[0]$/;"	v
+start_y	villa_common/villa_demos/scripts/example_move.py	/^start_y = base.pose[1]$/;"	v
+states_cb	villa_common/villa_teleop/scripts/keyboard_teleop	/^def states_cb(msg):$/;"	f
+stop_all	villa_common/villa_teleop/scripts/keyboard_teleop	/^def stop_all():$/;"	f
+strafeBindings	villa_common/villa_teleop/scripts/keyboard_teleop	/^strafeBindings = {$/;"	v
+stvd	dmp_manipulation/include/dmp_manager.h	/^typedef std::vector<double> stvd;$/;"	t
+t_0	dmp/script/sample.py	/^    t_0 = 0                $/;"	v
+target_point_sub_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  ros::Subscriber target_point_sub_;$/;"	m	class:GazedPointFixing	file:
+tau	dmp/script/sample.py	/^    tau = 2 * resp.tau       #Desired plan should take twice as long as demo$/;"	v
+tf_buffer_	villa_manipulation/manipulation_tutorials/src/gazed_point_fixing_node.cpp	/^  tf2_ros::Buffer tf_buffer_;$/;"	m	class:GazedPointFixing	file:
+tfbroadcaster	villa_manipulation/villa_manipulation/scripts/tf_broadcaster	/^    tfbroadcaster = TFBroadcaster()$/;"	v	class:TFBroadcaster
+timers	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^        timers = valid_timers$/;"	v
+timers	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^timers = {}$/;"	v
+timers_lock	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^timers_lock = Lock()$/;"	v
+traj	dmp/script/sample.py	/^    traj = [[1.0,1.0],[2.0,2.0],[3.0,4.0],[6.0,8.0]]$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/arm_actionlib_cancel.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/arm_message.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/arm_message_cancel.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/gripper_actionlib.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/gripper_message.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/head_actionlib.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/head_message.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/omni_actionlib.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj	villa_manipulation/manipulation_tutorials/scripts/omni_message.py	/^traj = trajectory_msgs.msg.JointTrajectory()$/;"	v
+traj_x	dmp/script/sample.py	/^    traj_x =[1.0,2,0,3,0,6,0]$/;"	v
+traj_y	dmp/script/sample.py	/^    traj_y =[1.0,2,0,4,0,8,0]$/;"	v
+trajectory_map	dmp_manipulation/include/dmp_manager.h	/^    map<int,sensor_msgs::JointState> trajectory_map;$/;"	m	class:DMP_Manager
+tts	villa_common/villa_demos/scripts/example_move.py	/^tts = robot.try_get('default_tts')$/;"	v
+tts	villa_common/villa_demos/scripts/example_speech.py	/^tts = robot.try_get('default_tts')$/;"	v
+turn	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^turn = 0.5$/;"	v
+tw	villa_manipulation/manipulation_tutorials/scripts/omni_message_velocity.py	/^tw = geometry_msgs.msg.Twist()$/;"	v
+unsafe_move_arm_to_neutral	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^    def unsafe_move_arm_to_neutral(self):$/;"	m	class:GroovyMotion
+unsafe_move_to_neutral	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^    def unsafe_move_to_neutral(self):$/;"	m	class:GroovyMotion
+valid_timers	villa_common/villa_helpers/scripts/countdown_timer_visualizer	/^        valid_timers = {}$/;"	v
+vels	villa_common/villa_demos/scripts/teleop_twist_keyboard.py	/^def vels(speed,turn):$/;"	f
+vels	villa_common/villa_teleop/scripts/keyboard_teleop	/^def vels(linear, angular):$/;"	f
+wait	villa_common/villa_helpers/src/villa_helpers/groovy_motion.py	/^        def wait(timeout):$/;"	f	function:GroovyMotion.__construct_future
+weights	dmp/include/dmp/function_approx.h	/^	std::vector<double> weights;	\/\/The weight vector$/;"	m	class:dmp::FunctionApprox
+whole_body	villa_common/villa_demos/scripts/example_move.py	/^whole_body = robot.try_get('whole_body')$/;"	v
+whole_body	villa_common/villa_demos/scripts/example_speech.py	/^whole_body = robot.try_get('whole_body')$/;"	v
+whole_body	villa_manipulation/manipulation_tutorials/scripts/open_hinged_door.py	/^        whole_body = robot.get('whole_body')$/;"	v
+whole_body	villa_manipulation/manipulation_tutorials/scripts/pickup_bottle.py	/^        whole_body = robot.get('whole_body')$/;"	v
+widths	dmp/include/dmp/radial_approx.h	/^	double *widths;    \/\/Widths of RBFs$/;"	m	class:dmp::RadialApprox
+wrist_flex_joint	dmp_manipulation/include/dmp_manager.h	47;"	d
+wrist_roll_joint	dmp_manipulation/include/dmp_manager.h	48;"	d
+x_0	dmp/script/sample.py	/^    x_0 = [0.0,0.0]          #Plan starting at a different point than demo $/;"	v
+x_dot_0	dmp/script/sample.py	/^    x_dot_0 = [0.0,0.0]   $/;"	v
+~DMP_Manager	dmp_manipulation/src/dmp_manager.cpp	/^DMP_Manager::~DMP_Manager(){}$/;"	f	class:DMP_Manager
+~FourierApprox	dmp/src/fourier_approx.cpp	/^FourierApprox::~FourierApprox()$/;"	f	class:dmp::FourierApprox
+~FunctionApprox	dmp/include/dmp/function_approx.h	/^	virtual ~FunctionApprox(){};$/;"	f	class:dmp::FunctionApprox
+~LinearApprox	dmp/src/linear_approx.cpp	/^LinearApprox::~LinearApprox(){};$/;"	f	class:dmp::LinearApprox
+~RadialApprox	dmp/src/radial_approx.cpp	/^RadialApprox::~RadialApprox()$/;"	f	class:dmp::RadialApprox

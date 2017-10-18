@@ -1,0 +1,9 @@
+int8 object_id
+geometry_msgs/PoseStamped bbox_pose
+float32 bbox_width
+float32 bbox_length
+float32 bbox_height
+string table_aligned_axis
+string grasp_direction
+---
+bool success
