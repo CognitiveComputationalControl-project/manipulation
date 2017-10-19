@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find villa_parallel_planner)/launch/planner_idx.xml" >
+        <arg name="idx" value="0" />
+    </include>
+
+    <include file="$(find villa_parallel_planner)/launch/planner_idx.xml" >
+        <arg name="idx" value="1" />
+    </include> 
+    
+    <include file="$(find villa_parallel_planner)/launch/planner_idx.xml" >
+        <arg name="idx" value="2" />
+    </include> 
+    
+    <include file="$(find villa_parallel_planner)/launch/planner_idx.xml" >
+        <arg name="idx" value="3" />
+    </include> 
+
+    <node name="parallel_planner_node" pkg="villa_parallel_planner" type="parallel_planner_service" >
+        <param name="hand_goal_service" value="plan_with_hand_goals" />
+        <param name="hand_line_service" value="plan_with_hand_line" />
+        <param name="n" value="4" />
+    </node>
+    
+</launch>

@@ -1,0 +1,4 @@
+geometry_msgs/PoseStamped drop_point
+float32 threshold
+---
+bool success

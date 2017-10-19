@@ -1,0 +1,82 @@
+#!/usr/bin/python
+
+from villa_parallel_planner.parallel_sequence_planner import ParallelSequencePlanner
+from villa_parallel_planner.srv import ParallelPlanSequence, ParallelPlanSequenceResponse
+
+from sensor_msgs.msg import JointState
+from tmc_manipulation_msgs.srv import GetCollisionEnvironment, GetCollisionEnvironmentRequest
+
+from hsrb_interface import collision_world
+from hsrb_interface import robot
+from hsrb_interface import settings
+from hsrb_interface import geometry
+from hsrb_interface import utils
+
+import rospy
+
+class ParallelPlannerServer:
+    def __init__(self):
+        rospy.init_node('parallel_planner_node')
+
+        hand_goal_service = rospy.get_param('/parallel_planner_node/hand_goal_service')
+        hand_line_service = rospy.get_param('/parallel_planner_node/hand_line_service')
+        n = rospy.get_param('/parallel_planner_node/n')
+        
+        self.parallel_planner = ParallelSequencePlanner(hand_goal_service, hand_line_service, n)
+
+        self._setting = settings.get_entry('joint_group', 'whole_body')
+        self._cw_setting = settings.get_entry('collision_world', 'global_collision_world') 
+
+        joint_state_topic = self._setting["joint_states_topic"]
+        self._joint_state_sub = utils.CachingSubscriber(joint_state_topic,
+                                                        JointState,
+                                                        default=JointState())
+        timeout = self._setting.get('timeout', None)
+        self._joint_state_sub.wait_for_message(timeout)
+
+        self._tf2_buffer = robot._get_tf2_buffer() 
+
+        rospy.Service('parallel_plan', ParallelPlanSequence, self.parallel_plan)
+
+    def _lookup_odom_to_ref(self, ref_frame_id):
+        odom_to_ref_ros = self._tf2_buffer.lookup_transform(
+            settings.get_frame('odom'),
+            ref_frame_id,
+            rospy.Time(0),
+            rospy.Duration(self._tf_timeout)
+        ).transform
+        odom_to_ref_tuples = geometry.transform_to_tuples(odom_to_ref_ros)
+        return geometry.tuples_to_pose(odom_to_ref_tuples)
+
+    def _get_joint_state(self):
+        return self._joint_state_sub.data
+
+    def _get_collision_env(self, ref_frame_id=None):
+        req = GetCollisionEnvironmentRequest()
+        req.known_object_only = self._known_object_only
+        if ref_frame_id is None:
+            req.origin_frame_id = self._ref_frame_id
+        else:
+            req.origin_frame_id = ref_frame_id
+
+        service = rospy.ServiceProxy(self._cw_setting['service'],
+                                     GetCollisionEnvironment)
+        res = service.call(req)
+        return res.environment
+
+    def parallel_plan(self, req):
+        odom_to_robot_pose = self._lookup_odom_to_ref(settings.get_frame('base'))
+        initial_joint_state = self._get_joint_state()
+        collision_env = self._get_collision_env('odom')
+
+        trajectories = self.parallel_planner.plan_sequence(req.sequences, odom_to_robot_pose, initial_joint_state, collision_env)
+
+        return ParallelPlanSequenceResponse(trajectories)
+
+    def run(self):
+        rospy.spin()
+
+if __name__ == '__main__':
+    parallel_planner_server = ParallelPlannerServer()
+    parallel_planner_server.run()
+

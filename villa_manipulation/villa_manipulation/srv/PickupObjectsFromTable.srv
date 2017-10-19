@@ -1,0 +1,6 @@
+geometry_msgs/PoseStamped table_pose
+float32 table_width
+float32 table_length
+float32 table_height
+---
+bool task_outcome

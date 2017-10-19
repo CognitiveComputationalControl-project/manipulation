@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+import rospy
+import tf2_ros
+import geometry_msgs.msg
+from villa_manipulation.srv import BroadcastObjectFrames, BroadcastObjectFramesResponse
+import tf
+import tf_conversions
+
+
+class TFBroadcaster(object):
+
+    def __init__(self):
+        self.server = rospy.Service('broadcast_object_frames', BroadcastObjectFrames, self.__handle_broadcast_request)
+        self.broadcaster = tf2_ros.StaticTransformBroadcaster()
+        print("Initialized")
+
+
+    def __handle_broadcast_request(self, req):
+        parent_frames = req.parent_frames  # Assuming each of this things have the same index
+        object_frames = req.child_frames
+        poses = req.poses
+
+        # Construct all static transforms
+        time = rospy.Time.now()
+        transforms = []
+        for parent_frame, object_frame, pose in zip(parent_frames, object_frames, poses):
+            t = geometry_msgs.msg.TransformStamped()
+            t.header.stamp = time
+            t.header.frame_id = parent_frame
+            t.child_frame_id = object_frame
+            self.__configure_pose(t, pose)
+            transforms.append(t)
+
+        self.broadcaster.sendTransform(transforms)
+
+        res = BroadcastObjectFramesResponse()
+        res.success = True
+        return res
+
+
+    def __configure_pose(self, t, msg):
+        z = tf_conversions.fromMsg(msg).M.UnitZ()[2]
+        # TODO: Check that this is correctly maintaining X and Y
+        # If Z is pointing down, flip it up
+        if z < 0:  # Need to flip Z for pi/2
+            q1 = [1, 0, 0, 0]
+            ori = [msg.orientation.x, msg.orientation.y, msg.orientation.z, msg.orientation.w]
+            res1 = tf.transformations.quaternion_multiply(ori, q1)
+            q2 = [0, 0, 1, 0]
+            res2 = tf.transformations.quaternion_multiply(res1, q2)
+            msg.orientation.x = res2[0]
+            msg.orientation.y = res2[1]
+            msg.orientation.z = res2[2]
+            msg.orientation.w = res2[3]
+
+        t.transform.translation.x = msg.position.x
+        t.transform.translation.y = msg.position.y
+        t.transform.translation.z = msg.position.z
+        t.transform.rotation.x = msg.orientation.x
+        t.transform.rotation.y = msg.orientation.y
+        t.transform.rotation.z = msg.orientation.z
+        t.transform.rotation.w = msg.orientation.w
+
+
+if __name__ == '__main__':
+    rospy.init_node('tf_broadcaster')
+
+    tfbroadcaster = TFBroadcaster()
+
+    rospy.spin()
