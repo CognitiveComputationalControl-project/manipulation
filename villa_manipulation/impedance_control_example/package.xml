@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <name>hsrb_impedance_control_example</name>
+  <version>1.0.0</version>
+  <description>Example scripts of impedance control for hsrb</description>
+  <maintainer email="keisuke_takeshita@mail.toyota.co.jp">Keisuke Takeshita</maintainer>
+  <license>TMC</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>control_msgs</run_depend>
+  <run_depend>hsrb_interface_py</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>tmc_manipulation_msgs</run_depend>
+
+  <export>
+  </export>
+</package>

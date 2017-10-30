@@ -1,0 +1,17 @@
+<package>
+  <name>hsrb_interact_grasp_planner</name>
+  <version>0.0.0</version>
+  <description>Interfaces of interactive grasp planner </description>
+  <maintainer email="keisuke_takeshita@mail.toyota.co.jp">Keisuke Takeshita</maintainer>
+
+  <license>TMC</license>
+  <url type="website">None</url>
+  <author>Keisuke Takeshita</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>tmc_interactive_grasp_planner</run_depend>
+  <run_depend>hsrb_impedance_control_example</run_depend>
+
+</package>

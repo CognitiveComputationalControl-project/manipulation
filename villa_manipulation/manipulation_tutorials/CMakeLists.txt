@@ -43,6 +43,8 @@ include_directories(
 )
 
 add_executable(arm_message src/arm_message.cpp)
+add_executable(arm_jointctrl src/arm_joint_ctrl.cpp)
+add_executable(arm_jointaction src/arm_joint_action.cpp)
 add_executable(arm_trajectory src/arm_trajectory.cpp)
 add_executable(arm_actionlib src/arm_actionlib.cpp)
 add_executable(head_message src/head_message.cpp)
@@ -61,6 +63,12 @@ add_executable(gazed_point_fixing_node  src/gazed_point_fixing_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(arm_message
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(arm_jointctrl
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(arm_jointaction
   ${catkin_LIBRARIES}
 )
 target_link_libraries(arm_trajectory
@@ -105,7 +113,7 @@ target_link_libraries(gazed_point_fixing_node
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS arm_message arm_trajectory arm_actionlib head_message head_actionlib
+install(TARGETS arm_message arm_jointaction arm_jointctrl arm_trajectory arm_actionlib head_message head_actionlib
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
