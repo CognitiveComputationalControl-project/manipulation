@@ -12,7 +12,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "test");
 
   // initialize action client
-  Client cli("/hsrb/arm_trajectory_controller/follow_joint_trajectory", true);
+  Client cli("/hsrb/impedance_control/follow_joint_trajectory", true);
 
   // wait for the action server to establish connection
   cli.waitForServer();

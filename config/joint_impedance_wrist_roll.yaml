@@ -1,0 +1,13 @@
+- - wrist_roll_joint:
+      const_damping_torque_deadband: 2.5e-05
+      const_external_torque_deadband: 0.0025
+      const_friction_torque_deadband: 0.0006
+      const_ic_damping: 0.05
+      const_ic_inertia: 0.005
+      const_ic_joint_stiffness: 150.143295
+      const_ic_kinematic_friction: 1.5e-05
+      const_ic_spring_coefficient: 0.011
+      const_ic_switch_external_torque: 1.0
+      const_ic_viscous_friction: 1.0e-05
+      const_spring_torque_limit: 0.3
+      ref_feedforward_torque: 0.0

@@ -1,0 +1,13 @@
+- - arm_lift_joint:
+      const_damping_torque_deadband: 3.0e-05
+      const_external_torque_deadband: 0.003
+      const_friction_torque_deadband: 6.0e-05
+      const_ic_damping: 0.00106
+      const_ic_inertia: 0.002
+      const_ic_joint_stiffness: 0.54329
+      const_ic_kinematic_friction: 1.5e-05
+      const_ic_spring_coefficient: 0.000284
+      const_ic_switch_external_torque: 1.0
+      const_ic_viscous_friction: 5.0e-05
+      const_spring_torque_limit: 0.001
+      ref_feedforward_torque: 0.0
