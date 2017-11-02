@@ -32,7 +32,7 @@ _PLANNING_MAX_ITERATION = 10000
 _PLANNING_GOAL_GENERATION = 0.3
 _PLANNING_GOAL_DEVIATION = 0.3
 
-HANDLE_POS = (0.50, 0.0, 0.95) #wrt the odom frame 
+HANDLE_POS = (1.46, 0.17, 0.947) #wrt the odom frame 
 HANDLE_TO_DOOR_HINGE_POS = 0.61
 HANDLE_TO_HANDLE_HINGE_POS = -0.061
 HANDLE_TO_HAND_POS = 0.16 #distance wrist - handle when grasped
@@ -83,7 +83,7 @@ def main(whole_body, gripper):
                                                        ej=(math.pi/2)),
                                          geometry.pose(ek=-(math.pi/2)))
     whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF) #the frame that is used is specified  
-    gripper.command(0.1) #close hand 
+    gripper.grasp(-1.0) #close hand 
     rospy.sleep(10.0)
 
 # Rotate the handle (Angle: math.pi/6)
@@ -135,7 +135,7 @@ def main(whole_body, gripper):
    # Open the door (Angle: math.pi/4)
     odom_to_hand = get_relative_tuples(_ORIGIN_TF, _HAND_TF)
     tsr_to_odom = geometry.pose(x=-HANDLE_POS[0],
-                                y=-(HANDLE_POS[1]+HANDLE_TO_DOOR_HINGE_POS+0.5),
+                                y=-(HANDLE_POS[1]+HANDLE_TO_DOOR_HINGE_POS),
                                 z=-HANDLE_POS[2])
     tsr_to_hand = geometry.multiply_tuples(tsr_to_odom, odom_to_hand)
 
@@ -143,20 +143,20 @@ def main(whole_body, gripper):
     const_tsr = TaskSpaceRegion()
     const_tsr.end_frame_id = _HAND_TF  #frame i am modifying
     const_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=HANDLE_POS[0],
-                                                                    y=HANDLE_POS[1]+HANDLE_TO_DOOR_HINGE_POS+0.5,
+                                                                    y=HANDLE_POS[1]+HANDLE_TO_DOOR_HINGE_POS,
                                                                     z=HANDLE_POS[2]))
     const_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
     const_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, 0]
-    const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, (math.pi/4)]
+    const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, (math.pi/2)]
 		#definition of final position
     goal_tsr = TaskSpaceRegion()
     goal_tsr.end_frame_id = _HAND_TF   #frame i am modifying
     goal_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=HANDLE_POS[0],
-                                                                   y=HANDLE_POS[1]+HANDLE_TO_DOOR_HINGE_POS+0.5,
+                                                                   y=HANDLE_POS[1]+HANDLE_TO_DOOR_HINGE_POS,
                                                                    z=HANDLE_POS[2]))
     goal_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-    goal_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, (math.pi/4)]
-    goal_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, (math.pi/4)]
+    goal_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, (math.pi/2)]
+    goal_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, (math.pi/2)]
 		#trajectory planning
     response = call_tsr_plan_service(whole_body, [const_tsr], [goal_tsr])
 		#make sure no errors
