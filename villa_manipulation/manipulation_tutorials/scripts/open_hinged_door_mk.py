@@ -196,12 +196,12 @@ def main(whole_body, gripper,wrist_wrench):
     armPub.publish(traj)
 
     rospy.sleep(5.0)
-    whole_body.end_effector_frame = u'odom'
-    whole_body.move_end_effector_by_line((0, 0, 1), -0.2)
+    # whole_body.end_effector_frame = u'odom'
+    # whole_body.move_end_effector_by_line((0, 0, 1), -0.2)
 
 
     # publish_arm(latest_positions["arm_lift_joint"],latest_positions["arm_flex_joint"],latest_positions["arm_roll_joint"], latest_positions["wrist_flex_joint"],wrist_roll)
-    whole_body.end_effector_frame = u'base_link'
+    # whole_body.end_effector_frame = u'base_link'
     whole_body.impedance_config = 'grasping'
     whole_body.move_end_effector_by_line((0, 0, 1), 0.4)
     whole_body.impedance_config= None
