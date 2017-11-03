@@ -48,7 +48,7 @@ HANDLE_POS = (5.1, 0.51, 0.947)
 RECOG_HANDLE_POS = (0.0, 0.0, 0.0)
 HANDLE_TO_DOOR_HINGE_POS = 0.61
 HANDLE_TO_HANDLE_HINGE_POS = -0.06
-HANDLE_TO_HAND_POS = 0.071
+HANDLE_TO_HAND_POS = 0.067
 HANDLE_GOAL_OFFSET = 0.5
 recog_pos = geometry_msgs.msg.PoseStamped()
 recog_pos.pose.position.x=0.00
@@ -174,8 +174,7 @@ def main(whole_body, gripper,wrist_wrench):
     # print(whole_body.impedance_config)
     # desired_rot=-1.95
     # whole_body.move_to_joint_positions({"wrist_roll_joint":desired_rot})
-    wrist_roll=latest_positions["wrist_roll_joint"]-0.45
-
+    wrist_roll=latest_positions["wrist_roll_joint"]-0.55
 
     traj = JointTrajectory()
     # This controller requires that all joints have values
@@ -183,8 +182,8 @@ def main(whole_body, gripper,wrist_wrench):
                         "arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
     p = JointTrajectoryPoint()
     current_positions = [latest_positions[name] for name in traj.joint_names]
-    current_positions[0] = latest_positions["arm_lift_joint"]
-    current_positions[1] = latest_positions["arm_flex_joint"]
+    current_positions[0] = latest_positions["arm_lift_joint"]-0.04
+    current_positions[1] = latest_positions["arm_flex_joint"]-0.015
     current_positions[2] = latest_positions["arm_roll_joint"]
     current_positions[3] = latest_positions["wrist_flex_joint"]
     current_positions[4] = wrist_roll
@@ -203,7 +202,7 @@ def main(whole_body, gripper,wrist_wrench):
     # publish_arm(latest_positions["arm_lift_joint"],latest_positions["arm_flex_joint"],latest_positions["arm_roll_joint"], latest_positions["wrist_flex_joint"],wrist_roll)
     # whole_body.end_effector_frame = u'base_link'
     whole_body.impedance_config = 'grasping'
-    whole_body.move_end_effector_by_line((0, 0, 1), 0.4)
+    whole_body.move_end_effector_by_line((0, 0, 1), 0.35)
     whole_body.impedance_config= None
    
 
