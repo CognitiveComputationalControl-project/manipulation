@@ -10,6 +10,13 @@ import sys
 import tf
 import tf2_ros
 import geometry_msgs.msg
+from sensor_msgs.msg import JointState
+import moveit_commander
+import trajectory_msgs.msg
+import moveit_msgs
+from copy import deepcopy
+import controller_manager_msgs.srv
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import PoseStamped
 from tmc_planning_msgs.srv import PlanWithTsrConstraints
 from tmc_planning_msgs.srv import PlanWithTsrConstraintsRequest
@@ -41,17 +48,37 @@ HANDLE_POS = (5.1, 0.51, 0.947)
 RECOG_HANDLE_POS = (0.0, 0.0, 0.0)
 HANDLE_TO_DOOR_HINGE_POS = 0.61
 HANDLE_TO_HANDLE_HINGE_POS = -0.06
-HANDLE_TO_HAND_POS = 0.15
+HANDLE_TO_HAND_POS = 0.071
 HANDLE_GOAL_OFFSET = 0.5
 recog_pos = geometry_msgs.msg.PoseStamped()
 recog_pos.pose.position.x=0.00
 recog_pos.pose.position.y=-0.0
 recog_pos.pose.position.z=0.0
+cur_arm_lift_joint=0.0
+cur_wrist_roll_joint=0.0
 
-# recog_pos.pose.position.x=0.70
-# recog_pos.pose.position.y=-0.2
+# recog_pos.pose.position.x=0.30
+# recog_pos.pose.position.y=0.2
 # recog_pos.pose.position.z=0.947
 
+def publish_arm(lift, flex,roll,wrist_flex,wrist_roll):
+    traj = JointTrajectory()
+    # This controller requires that all joints have values
+    traj.joint_names = ["arm_lift_joint", "arm_flex_joint",
+                        "arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+    p = JointTrajectoryPoint()
+    current_positions = [latest_positions[name] for name in traj.joint_names]
+    current_positions[0] = lift
+    current_positions[1] = flex
+    current_positions[2] = roll
+    current_positions[3] = wrist_flex
+    current_positions[4] = wrist_roll
+    p.positions = current_positions
+    p.velocities = [0, 0, 0, 0, 0]
+    p.time_from_start = rospy.Time(3)
+    traj.points = [p]
+
+    armPub.publish(traj)
 
 def call_tsr_plan_service(whole_body, constraint_tsrs, goal_tsrs):
     odom_to_robot_pose = geometry.tuples_to_pose(get_relative_tuples(_ORIGIN_TF,
@@ -77,6 +104,7 @@ def call_tsr_plan_service(whole_body, constraint_tsrs, goal_tsrs):
     res = plan_service.call(req)
     return res
 
+latest_positions = None
 def get_relative_tuples(base_frame, target_frame):
 
     while not rospy.is_shutdown():
@@ -93,26 +121,38 @@ def get_relative_tuples(base_frame, target_frame):
     return tuples
 
 def grasp_point_callback(msg):
-    recog_pos.pose.position.x=msg.pose.position.x-0.06
-    recog_pos.pose.position.y=msg.pose.position.y-0.01
+    recog_pos.pose.position.x=msg.pose.position.x
+    recog_pos.pose.position.y=msg.pose.position.y
     recog_pos.pose.position.z=msg.pose.position.z
     # dkldsaflk;print recog_pos.pose.position
-
+def joint_states_callback(msg):
+    global latest_positions
+    positions = {}
+    for name, i in zip(msg.name, range(len(msg.name))):
+        positions[name] = msg.position[i]
+    latest_positions = positions
 
 def listnerfunction():
     # rospy.init_node('listener',anonymous=True)
     rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
+    rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
 
 def main(whole_body, gripper,wrist_wrench):
-    # Grab the handle of door
-    # wrist_wrench =wholjjjjjjjjjk
+    
+    armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
+    ## Grab the handle of door
+    target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
+    recog_pos.pose.position.x=target_pose_Msg.pose.position.x
+    recog_pos.pose.position.y=target_pose_Msg.pose.position.y
+    recog_pos.pose.position.z=target_pose_Msg.pose.position.z
+
     whole_body.move_to_neutral()
     # whole_body.impedance_config= 'grasping'
     switch = ImpedanceControlSwitch() 
     # wrist_wrench.reset()
     gripper.command(1.0)
 
-    grab_pose = geometry.multiply_tuples(geometry.pose(x=recog_pos.pose.position.x,
+    grab_pose = geometry.multiply_tuples(geometry.pose(x=recog_pos.pose.position.x-HANDLE_TO_HAND_POS,
                                                        y=recog_pos.pose.position.y,
                                                        z=recog_pos.pose.position.z,
                                                        ej=math.pi/2),
@@ -122,15 +162,66 @@ def main(whole_body, gripper,wrist_wrench):
     # whole_body.impedance_config= 'compliance_middle'
     switch.activate("grasping")
     # gripper.command(0.01)
-    gripper.grasp(-0.0075)
+    gripper.grasp(-0.008)
     rospy.sleep(1.0)
     switch.inactivate()
 
-    # wrist_wrench.reset()
+    wrist_wrench.reset()
     rospy.sleep(8.0)
 
-    listener = tf.TransformListener()
-    listener.waitForTransform("/odom", "/hand_palm_link", rospy.Time(), rospy.Duration(3.0))
+    #### test manipulation
+    whole_body.impedance_config = 'grasping'
+    # print(whole_body.impedance_config)
+    # desired_rot=-1.95
+    # whole_body.move_to_joint_positions({"wrist_roll_joint":desired_rot})
+    wrist_roll=latest_positions["wrist_roll_joint"]-0.45
+
+
+    traj = JointTrajectory()
+    # This controller requires that all joints have values
+    traj.joint_names = ["arm_lift_joint", "arm_flex_joint",
+                        "arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+    p = JointTrajectoryPoint()
+    current_positions = [latest_positions[name] for name in traj.joint_names]
+    current_positions[0] = latest_positions["arm_lift_joint"]
+    current_positions[1] = latest_positions["arm_flex_joint"]
+    current_positions[2] = latest_positions["arm_roll_joint"]
+    current_positions[3] = latest_positions["wrist_flex_joint"]
+    current_positions[4] = wrist_roll
+    p.positions = current_positions
+    p.velocities = [0, 0, 0, 0, 0]
+    p.time_from_start = rospy.Time(3)
+    traj.points = [p]
+
+    armPub.publish(traj)
+
+    rospy.sleep(5.0)
+    whole_body.end_effector_frame = u'odom'
+    whole_body.move_end_effector_by_line((0, 0, 1), -0.2)
+
+
+    # publish_arm(latest_positions["arm_lift_joint"],latest_positions["arm_flex_joint"],latest_positions["arm_roll_joint"], latest_positions["wrist_flex_joint"],wrist_roll)
+    whole_body.end_effector_frame = u'base_link'
+    whole_body.impedance_config = 'grasping'
+    whole_body.move_end_effector_by_line((0, 0, 1), 0.4)
+    whole_body.impedance_config= None
+   
+
+    
+    ## 
+    # whole_body.move_to_joint_positions({"wrist_roll_joint": -0.3})
+    # rospy.sleep(2.0)
+    # whole_body.end_effector_frame = u'odom'
+    # whole_body.move_end_effector_by_line((0, 0, 1), -0.2)
+    
+    # whole_body.move_end_effector_by_arc(geometry.pose(x=0.2, y=0.25, z=0.38, ej=math.radians(90.0)), math.radians(60.0))
+    # whole_body.move_end_effector_by_arc(geometry.pose(y=0.45, z=0.08, ej=math.radians(90.0)), math.radians(60.0), ref_frame_id='hand_palm_link')
+
+
+    # listener = tf.TransformListener()
+    # listener.waitForTransform("/odom", "/hand_palm_link", rospy.Time().now(), rospy.Duration(3.0))
+    
+
     # now = rospy.Time.now()
     # listener.waitForTransform("/odom", "/hand_palm_link", now, rospy.Duration(5.0))
     # (trans, rot) = listener.lookupTransform("/map", "/hand_palm_link", now)
@@ -140,114 +231,99 @@ def main(whole_body, gripper,wrist_wrench):
     # print trans
     # print rot
  
-    #tf frame
-    # br = tf2_ros.TransformBroadcaster()
-    # t = geometry_msgs.msg.TransformStamped()
-
-    # t.header.stamp = rospy.Time.now()
-    # t.header.frame_id = "/map"
-    # t.child_frame_id = "/target"
-    # t.transform.translation.x = trans[0]
-    # t.transform.translation.y = trans[1]
-    # t.transform.translation.z = trans[2]
-    # q = tf.transformations.quaternion_from_euler(0, 0, 0.0)
-    # t.transform.rotation.x = rot[0]
-    # t.transform.rotation.y = rot[1]
-    # t.transform.rotation.z = rot[2]
-    # t.transform.rotation.w = rot[3]
-    # br.sendTransform(t)
-
 
     # Rotate the handle (Angle: math.pi/6)
-    # wrist_wrench.reset()
+    # wrist_wrench.reset()  
     # whole_body.end_effector_frame = 'hand_palm_link'
     # whole_body.impedance_config= 'dumper_soft'
 
-    switch.activate("placing")
-    odom_to_hand = get_relative_tuples(_ORIGIN_TF, _HAND_TF)
-    tsr_to_odom = geometry.pose(x=-(recog_pos.pose.position.x),
-                                y=-(recog_pos.pose.position.y+HANDLE_TO_HANDLE_HINGE_POS),
-                                z=-recog_pos.pose.position.z)
-    tsr_to_hand = geometry.multiply_tuples(tsr_to_odom, odom_to_hand)
+   #############################
+    # odom_to_hand = get_relative_tuples(_ORIGIN_TF, _HAND_TF)
+    # tsr_to_odom = geometry.pose(x=-(recog_pos.pose.position.x+HANDLE_TO_HAND_POS),
+    #                             y=-(recog_pos.pose.position.y+HANDLE_TO_HANDLE_HINGE_POS),
+    #                             z=-recog_pos.pose.position.z)
+    # tsr_to_hand = geometry.multiply_tuples(tsr_to_odom, odom_to_hand)
 
-    const_tsr = TaskSpaceRegion()
-    const_tsr.end_frame_id = _HAND_TF
-    const_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x,
-                                                                    y=recog_pos.pose.position.y+HANDLE_TO_HANDLE_HINGE_POS,
-                                                                    z=recog_pos.pose.position.z))
-    const_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-    const_tsr.min_bounds = [0, 0.0, 0.0,-(math.pi/7) , 0, 0]
-    const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, 0]
+    # const_tsr = TaskSpaceRegion()
+    # const_tsr.end_frame_id = _HAND_TF
+    # const_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x+HANDLE_TO_HAND_POS,
+    #                                                                 y=recog_pos.pose.position.y+HANDLE_TO_HANDLE_HINGE_POS,
+    #                                                                 z=recog_pos.pose.position.z))
+    # const_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
+    # const_tsr.min_bounds = [0, 0.0, 0.0,-(math.pi/7) , 0, 0]
+    # const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, 0]
 
-    goal_tsr = TaskSpaceRegion()
-    goal_tsr.end_frame_id = _HAND_TF
-    goal_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x,
-                                                                   y=recog_pos.pose.position.y+HANDLE_TO_HANDLE_HINGE_POS,
-                                                                   z=recog_pos.pose.position.z))
-    goal_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-    goal_tsr.min_bounds = [0, 0.0, 0.0,-math.pi/7, 0, 0]
-    goal_tsr.max_bounds = [0, 0.0, 0.0,-math.pi/7, 0, 0]
+    # goal_tsr = TaskSpaceRegion()
+    # goal_tsr.end_frame_id = _HAND_TF
+    # goal_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x+HANDLE_TO_HAND_POS,
+    #                                                                y=recog_pos.pose.position.y+HANDLE_TO_HANDLE_HINGE_POS,
+    #                                                                z=recog_pos.pose.position.z))
+    # goal_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
+    # goal_tsr.min_bounds = [0, 0.0, 0.0,-math.pi/7, 0, 0]
+    # goal_tsr.max_bounds = [0, 0.0, 0.0,-math.pi/7, 0, 0]
 
-    response = call_tsr_plan_service(whole_body, [const_tsr], [goal_tsr])
-    if response.error_code.val != ArmManipulationErrorCodes.SUCCESS:
-        rospy.logerr("Planning failed: (Error Code {0})".format(response.error_code.val))
-        exit(-1)
-    response.base_solution.header.frame_id = _ORIGIN_TF
-    constrain_traj = whole_body._constrain_trajectories(response.solution,
-                                                        response.base_solution)
-    switch.activate("grasping")
-    whole_body._execute_trajectory(constrain_traj)
-    # whole_body.impedance_config= 'dumper_soft'
-    switch.inactivate()
-    rospy.sleep(10.0)
+    # response = call_tsr_plan_service(whole_body, [const_tsr], [goal_tsr])
+    # if response.error_code.val != ArmManipulationErrorCodes.SUCCESS:
+    #     rospy.logerr("Planning failed: (Error Code {0})".format(response.error_code.val))
+    #     exit(-1)
+    # response.base_solution.header.frame_id = _ORIGIN_TF
+    # constrain_traj = whole_body._constrain_trajectories(response.solution,
+    #                                                     response.base_solution)
+    # # wrist_wrench.reset()
+    # # switch.activate("grasping")
+    # whole_body._execute_trajectory(constrain_traj)
+    # # whole_body.impedance_config= 'dumper_soft'
+    # # switch.inactivate()
+    # rospy.sleep(10.0)
 
 
     # listener = tf.TransformListener()
-    now = rospy.Time.now()
-    listener.waitForTransform("/odom", "/hand_palm_link", now, rospy.Duration(3.0))
+    # now = rospy.Time.now()
+    # listener.waitForTransform("/odom", "/hand_palm_link", now, rospy.Duration(3.0))
 
-    rospy.sleep(1.0)
-    # Open the door (Angle: math.pi/4)
-    wrist_wrench.reset()
-    switch.activate("placing")
-    odom_to_hand = get_relative_tuples(_ORIGIN_TF, _HAND_TF)           #T0h
-    tsr_to_odom = geometry.pose(x=-(recog_pos.pose.position.x),
-                                y=-(recog_pos.pose.position.y+HANDLE_TO_DOOR_HINGE_POS+HANDLE_GOAL_OFFSET),
-                                z=-recog_pos.pose.position.z) #Twe
-    tsr_to_hand = geometry.multiply_tuples(tsr_to_odom, odom_to_hand) #T0s'
+    # rospy.sleep(3.0)
+    # # Open the door (Angle: math.pi/4)
+    # #rist_wrench.reset()
+    # # switch.activate("placing")
+    # odom_to_hand = get_relative_tuples(_ORIGIN_TF, _HAND_TF)           #T0h
+    # tsr_to_odom = geometry.pose(x=-(recog_pos.pose.position.x),
+    #                             y=-(recog_pos.pose.position.y+HANDLE_TO_DOOR_HINGE_POS+HANDLE_GOAL_OFFSET),
+    #                             z=-recog_pos.pose.position.z) #Twe
+    # tsr_to_hand = geometry.multiply_tuples(tsr_to_odom, odom_to_hand) #T0s'
 
-    const_tsr = TaskSpaceRegion()
-    const_tsr.end_frame_id = _HAND_TF
-    const_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x,
-                                                                    y=recog_pos.pose.position.y+HANDLE_TO_DOOR_HINGE_POS++HANDLE_GOAL_OFFSET,
-                                                                    z=recog_pos.pose.position.z))
-    const_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-    const_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, 0]
-    const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
+    # const_tsr = TaskSpaceRegion()
+    # const_tsr.end_frame_id = _HAND_TF
+    # const_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x,
+    #                                                                 y=recog_pos.pose.position.y+HANDLE_TO_DOOR_HINGE_POS+HANDLE_GOAL_OFFSET,
+    #                                                                 z=recog_pos.pose.position.z))
+    # const_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
+    # const_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, 0]
+    # const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
 
-    goal_tsr = TaskSpaceRegion()
-    goal_tsr.end_frame_id = _HAND_TF
-    goal_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x,
-                                                                   y=recog_pos.pose.position.y+HANDLE_TO_DOOR_HINGE_POS+HANDLE_GOAL_OFFSET,
-                                                                   z=recog_pos.pose.position.z))
-    goal_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-    goal_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
-    goal_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
+    # goal_tsr = TaskSpaceRegion()
+    # goal_tsr.end_frame_id = _HAND_TF
+    # goal_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=recog_pos.pose.position.x,
+    #                                                                y=recog_pos.pose.position.y+HANDLE_TO_DOOR_HINGE_POS+HANDLE_GOAL_OFFSET,
+    #                                                                z=recog_pos.pose.position.z))
+    # goal_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
+    # goal_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
+    # goal_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
 
-    response = call_tsr_plan_service(whole_body, [const_tsr], [goal_tsr])
-    if response.error_code.val != ArmManipulationErrorCodes.SUCCESS:
-        rospy.logerr("Planning failed: (Error Code {0})".format(response.error_code.val))
-        exit(-1)
-    response.base_solution.header.frame_id = _ORIGIN_TF
-    constrain_traj = whole_body._constrain_trajectories(response.solution,
-                                                        response.base_solution)
-    whole_body._execute_trajectory(constrain_traj)
+    # response = call_tsr_plan_service(whole_body, [const_tsr], [goal_tsr])
+    # if response.error_code.val != ArmManipulationErrorCodes.SUCCESS:
+    #     rospy.logerr("Planning failed: (Error Code {0})".format(response.error_code.val))
+    #     exit(-1)
+    # response.base_solution.header.frame_id = _ORIGIN_TF
+    # constrain_traj = whole_body._constrain_trajectories(response.solution,
+    #                                                     response.base_solution)
+    # whole_body._execute_trajectory(constrain_traj)
 
-    # whole_body.impedance_config= None
-    switch.inactivate()
+    # # whole_body.impedance_config= None
+    # # switch.inactivate()
 
     gripper.command(1.0)
     whole_body.move_to_neutral()
+
 
 
 if __name__=='__main__':
