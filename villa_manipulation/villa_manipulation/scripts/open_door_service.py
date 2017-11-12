@@ -57,6 +57,7 @@ recog_pos.pose.position.y=-0.0
 recog_pos.pose.position.z=0.0
 
 
+latest_positions = None
 
 
 class setRobot:
@@ -115,7 +116,7 @@ def call_tsr_plan_service(whole_body, constraint_tsrs, goal_tsrs):
 	res = plan_service.call(req)
 	return res
 
-latest_positions = None
+
 def get_relative_tuples(base_frame, target_frame):
 
 	while not rospy.is_shutdown():
@@ -144,84 +145,14 @@ def joint_states_callback(msg):
 	latest_positions = positions
 
 def listnerfunction():
-	rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
+	# rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
 	rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
-
-# def opendoorfunction(whole_body, gripper,wrist_wrench):
-	# armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
-	# ## Grab the handle of door
-	# target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
-	# recog_pos.pose.position.x=target_pose_Msg.pose.position.x
-	# recog_pos.pose.position.y=target_pose_Msg.pose.position.y
-	# recog_pos.pose.position.z=target_pose_Msg.pose.position.z
-
-	# whole_body.move_to_neutral()
-	# # whole_body.impedance_config= 'grasping'
-	# switch = ImpedanceControlSwitch() 
-	# # wrist_wrench.reset()
-	# gripper.command(1.0)
-
-	# grab_pose = geometry.multiply_tuples(geometry.pose(x=recog_pos.pose.position.x-HANDLE_TO_HAND_POS,
-	#                                                    y=recog_pos.pose.position.y,
-	#                                                    z=recog_pos.pose.position.z,
-	#                                                    ej=math.pi/2),
-	#                                      geometry.pose(ek=math.pi/2))
-	# whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
-	# wrist_wrench.reset()
-	# # whole_body.impedance_config= 'compliance_middle'
-	# switch.activate("grasping")
-	# # gripper.command(0.01)
-	# gripper.grasp(-0.008)
-	# rospy.sleep(1.0)
-	# switch.inactivate()
-
-	# wrist_wrench.reset()
-	# rospy.sleep(8.0)
-
-	# #### test manipulation
-	# whole_body.impedance_config = 'grasping'
-	# # print(whole_body.impedance_config)
-	# # desired_rot=-1.95
-	# # whole_body.move_to_joint_positions({"wrist_roll_joint":desired_rot})
-	# wrist_roll=latest_positions["wrist_roll_joint"]-0.55
-
-	# traj = JointTrajectory()
-	# # This controller requires that all joints have values
-	# traj.joint_names = ["arm_lift_joint", "arm_flex_joint",
-	#                     "arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
-	# p = JointTrajectoryPoint()
-	# current_positions = [latest_positions[name] for name in traj.joint_names]
-	# current_positions[0] = latest_positions["arm_lift_joint"]-0.04
-	# current_positions[1] = latest_positions["arm_flex_joint"]-0.015
-	# current_positions[2] = latest_positions["arm_roll_joint"]
-	# current_positions[3] = latest_positions["wrist_flex_joint"]
-	# current_positions[4] = wrist_roll
-	# p.positions = current_positions
-	# p.velocities = [0, 0, 0, 0, 0]
-	# p.time_from_start = rospy.Time(3)
-	# traj.points = [p]
-
-	# armPub.publish(traj)
-
-	# rospy.sleep(5.0)
-	# # whole_body.end_effector_frame = u'odom'
-	# # whole_body.move_end_effector_by_line((0, 0, 1), -0.2)
-
-
-	# # publish_arm(latest_positions["arm_lift_joint"],latest_positions["arm_flex_joint"],latest_positions["arm_roll_joint"], latest_positions["wrist_flex_joint"],wrist_roll)
-	# # whole_body.end_effector_frame = u'base_link'
-	# whole_body.impedance_config = 'grasping'
-	# whole_body.move_end_effector_by_line((0, 0, 1), 0.35)
-	# whole_body.impedance_config= None
-
-	# gripper.command(1.0)
-	# whole_body.move_to_neutral()
 
 def opendoor(req):
 	# main(whole_body,  gripper,wrist_wrench)
 	frame = req.handle_pose.header.frame_id
-	hanlde_pos=geometry_msgs.msg.PoseStamped()
-	# hanlde_pos = req.handle_pose.pose
+	hanlde_pos = req.handle_pose.pose
+	# hanlde_pos=geometry_msgs.msg.PoseStamped()
 	res = OpendoorResponse()
 	armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
 	
@@ -234,9 +165,7 @@ def opendoor(req):
        	 gripper = robot.get('gripper')
     	 wrist_wrench = robot.get('wrist_wrench')
 
-
 	try: 
-
 		# Open the gripper 
 		print("Opening the gripper")
 		whole_body.move_to_neutral()
@@ -309,9 +238,9 @@ if __name__=='__main__':
 	print("Initialize Robot")
 	# robot = setRobot()
 	print("Initialize node")
-	rospy.init_node('OPenDoor_server')
+	rospy.init_node('OPendoor_server')
 	listnerfunction()
 	print("Start service")
-	s = rospy.Service('opendoor', Opendoor, opendoor)
+	s = rospy.Service('/opendoor', Opendoor, opendoor)
 	rospy.spin()
 		
