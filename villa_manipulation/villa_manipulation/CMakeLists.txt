@@ -13,6 +13,10 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   geometry_msgs
   sensor_msgs
+  hsr_kinematics
+  tmc_eigen_bridge
+  tmc_manipulation_types_bridge
+  tmc_utils
 )
 
 catkin_python_setup()
@@ -22,6 +26,7 @@ catkin_python_setup()
    FILES
    Pickup.srv
    BroadcastObjectFrames.srv
+   Opendoor.srv
  )
 
 ## Generate added messages and services with any dependencies listed here
@@ -40,6 +45,10 @@ catkin_package(
   control_msgs
   geometry_msgs
   sensor_msgs
+  hsr_kinematics
+  tmc_eigen_bridge
+  tmc_manipulation_types_bridge
+  tmc_utils
 )
 
 install(DIRECTORY scripts/

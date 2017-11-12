@@ -63,4 +63,3 @@ if __name__=='__main__':
 	s = rospy.Service('dropOff', DropOffObject, dropOff)
 	rospy.spin()
 
-
