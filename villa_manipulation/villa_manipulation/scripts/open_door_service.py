@@ -144,9 +144,9 @@ def joint_states_callback(msg):
 		positions[name] = msg.position[i]
 	latest_positions = positions
 
-def listnerfunction():
+# def listnerfunction():
 	# rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
-	rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
+	# rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
 
 def opendoor(req):
 	# main(whole_body,  gripper,wrist_wrench)
@@ -154,16 +154,16 @@ def opendoor(req):
 	hanlde_pos = req.handle_pose.pose
 	# hanlde_pos=geometry_msgs.msg.PoseStamped()
 	res = OpendoorResponse()
-	armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
+        armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
 	
-	# robot = hsrb_interface.Robot()
-	# whole_body = robot.get('whole_body')
-	# gripper = robot.get('gripper')
-	# wrist_wrench = robot.get('wrist_wrench')
-	with hsrb_interface.Robot() as robot:
-     	 whole_body = robot.get('whole_body')
-       	 gripper = robot.get('gripper')
-    	 wrist_wrench = robot.get('wrist_wrench')
+        robot = hsrb_interface.Robot()
+        whole_body = robot.get('whole_body')
+        gripper = robot.get('gripper')
+        wrist_wrench = robot.get('wrist_wrench')
+	# with hsrb_interface.Robot() as robot:
+            # whole_body = robot.get('whole_body')
+            # gripper = robot.get('gripper')
+            # wrist_wrench = robot.get('wrist_wrench')
 
 	try: 
 		# Open the gripper 
@@ -180,67 +180,60 @@ def opendoor(req):
 													   ej=math.pi/2),
 										 geometry.pose(ek=math.pi/2))
 		
-		robot.whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
+		whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
 		
 		# Close the gripper
-		robot.wrist_wrench.reset()
+		wrist_wrench.reset()
 		switch.activate("grasping")
-		robot.gripper.grasp(-0.008)
+		gripper.grasp(-0.008)
 		rospy.sleep(1.0)
 		switch.inactivate()
-
-
 		# Rotate the handle
-		robot.whole_body.impedance_config = 'grasping'
-		traj = JointTrajectory()
+                whole_body.impedance_config = 'grasping'
+                traj = JointTrajectory()
+	
+                # This controller requires that all joints have values
+                traj.joint_names = ["arm_lift_joint", "arm_flex_joint",
+                                                        "arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+                p = JointTrajectoryPoint()
 		
-		# This controller requires that all joints have values
-		traj.joint_names = ["arm_lift_joint", "arm_flex_joint",
-							"arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
-		p = JointTrajectoryPoint()
-		
-		# set the desired value
-		current_positions = [latest_positions[name] for name in traj.joint_names]
-		current_positions[0] = latest_positions["arm_lift_joint"]-0.04
-		current_positions[1] = latest_positions["arm_flex_joint"]-0.015
-		current_positions[2] = latest_positions["arm_roll_joint"]
-		current_positions[3] = latest_positions["wrist_flex_joint"]
-		current_positions[4] = latest_positions["wrist_roll_joint"]-0.55
-		p.positions = current_positions
-		p.velocities = [0, 0, 0, 0, 0]
-		p.time_from_start = rospy.Time(3)
-		traj.points = [p]
-
-		armPub.publish(traj)
-		
-		rospy.sleep(5.0)
-		
-
-		robot.whole_body.impedance_config = 'grasping'
-		robot.whole_body.move_end_effector_by_line((0, 0, 1), 0.35)
-		robot.whole_body.impedance_config= None
-
-		robot.gripper.command(1.0)
-		
-		robot.whole_body.move_to_neutral()
+                # set the desired value
+                current_positions = [latest_positions[name] for name in traj.joint_names]
+                current_positions[0] = latest_positions["arm_lift_joint"]-0.04
+                current_positions[1] = latest_positions["arm_flex_joint"]-0.015
+                current_positions[2] = latest_positions["arm_roll_joint"]
+                current_positions[3] = latest_positions["wrist_flex_joint"]
+                current_positions[4] = latest_positions["wrist_roll_joint"]-0.55
+                p.positions = current_positions
+                p.velocities = [0, 0, 0, 0, 0]
+                p.time_from_start = rospy.Time(3)
+                traj.points = [p]
+                armPub.publish(traj)
+                rospy.sleep(5.0)
+                whole_body.impedance_config = 'grasping'
+                whole_body.move_end_effector_by_line((0, 0, 1), 0.35)
+                whole_body.impedance_config= None
+                gripper.command(1.0)
+                whole_body.move_to_neutral()
 		res.success = True 
 
 	except Exception as e:
 		rospy.logerr(e)
 		print "Failed to open door"
 		res.success = False
-
 	return res
+
+def opendoor_server():
+        rospy.init_node('opendoor_server_node')
+        rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
+        s = rospy.Service('open_door_service', Opendoor, opendoor)
+        rospy.spin()
 
 
 if __name__=='__main__':
 	global robot
 	print("Initialize Robot")
-	# robot = setRobot()
-	print("Initialize node")
-	rospy.init_node('OPendoor_server')
-	listnerfunction()
-	print("Start service")
-	s = rospy.Service('/opendoor', Opendoor, opendoor)
-	rospy.spin()
-		
+        #this function has node so you don't have to initialize node
+        robot = setRobot()
+        opendoor_server()
+        print("Start service")
