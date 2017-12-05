@@ -21,6 +21,7 @@ from geometry_msgs.msg import PoseStamped
 from tmc_planning_msgs.srv import PlanWithTsrConstraints
 from tmc_planning_msgs.srv import PlanWithTsrConstraintsRequest
 from tmc_planning_msgs.msg import TaskSpaceRegion
+from move_base_msgs.msg import MoveBaseActionGoal, MoveBaseActionResult
 from tmc_manipulation_msgs.msg import (
     BaseMovementType,
     ArmManipulationErrorCodes
@@ -56,9 +57,9 @@ recog_pos = geometry_msgs.msg.PoseStamped()
 #recog_pos.pose.position.z=0.0
 cur_arm_lift_joint=0.0
 cur_wrist_roll_joint=0.0
-angle=0.0
-recog_pos.pose.position.x=0.30
-recog_pos.pose.position.y=0.2
+angle=30
+recog_pos.pose.position.x=1.14
+recog_pos.pose.position.y=-0.3
 recog_pos.pose.position.z=0.947
 
 def publish_arm(lift, flex,roll,wrist_flex,wrist_roll):
@@ -173,7 +174,7 @@ def main(whole_body, gripper,wrist_wrench):
                                                                z=recog_pos.pose.position.z,
                                                                ej=math.pi/2),
                                                  geometry.pose(ek=math.pi/2))
-            whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
+            whole_body.move_end_effector_pose(grab_pose, _ROBOT_TF)
             wrist_wrench.reset()
             # whole_body.impedance_config= 'compliance_middle'
             switch.activate("grasping")
@@ -232,7 +233,7 @@ def main(whole_body, gripper,wrist_wrench):
 
 
             #3.ROTATE PARALLEL TO THE DOOR 
-            #angle_rad = angle*(2*math.pi/360)
+            angle_rad = angle*(2*math.pi/360)
             #omni_base.go_rel(0.0, 0.0, angle_rad , 300.0) 
 
             ##4.GRAB THE DOOR HANDLE
@@ -242,19 +243,20 @@ def main(whole_body, gripper,wrist_wrench):
             # wrist_wrench.reset() 
             gripper.command(1.0) 
 
-            #change coordinates of the handle - now the door is open so the handle is moved - the data of the handle position are given for the closed door 
-            phi1 = math.pi/2 + angle/2
+            #change coordinates of the handle - now the door is open so the handle is moved - the data of the handle position are given for the closed door - I m supposing 
+            #that the coordinates of the handle are wrt the base_footprint tf 
+            phi = math.pi/2 - angle_rad/2
             l = HANDLE_TO_DOOR_HINGE_POS
-            d1 = 2 * l *  math.acos(phi)
-            recog_pos.pose.position.x = recog_pos.pose.position.x + d1 * math.asin(phi)
-            recog_pos.pose.position.y = recog_pos.pose.position.y + d1 * math.acos(phi)
+            d1 = 2 * l *  math.sin(angle_rad/2)
+            recog_pos.pose.position.x = recog_pos.pose.position.x + d1 * math.sin(phi)
+            recog_pos.pose.position.y = recog_pos.pose.position.y + d1 * math.cos(phi)
 
             grab_pose = geometry.multiply_tuples(geometry.pose(x=recog_pos.pose.position.x-HANDLE_TO_HAND_POS,
                                                                y=recog_pos.pose.position.y,
                                                                z=recog_pos.pose.position.z,
                                                                ej=math.pi/2),
                                                  geometry.pose(ek=math.pi/2))
-            whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
+            whole_body.move_end_effector_pose(grab_pose, _ROBOT_TF)
             wrist_wrench.reset()
             # whole_body.impedance_config= 'compliance_middle'
             switch.activate("grasping")
@@ -270,10 +272,14 @@ def main(whole_body, gripper,wrist_wrench):
             whole_body.impedance_config = 'grasping'
 
             #5.PUSH MOTION - he moves with the door - first option - streight movement 
-            phi = math.pi/4 + angle/2
+            phi = math.pi/4 + angle_rad/2
             l = HANDLE_TO_DOOR_HINGE_POS
-            d = 2 * l *  math.acos(phi)
-            omni_base.go_rel( d*math.asin(phi), d*math.acos(phi), math.pi/2 - angle_rad, 300.0)
+            d = 2 * l *  math.cos(phi)
+            #open_pose = geometry.pose(x = d*math.sin(phi), y=d*math.cos(phi), ek=math.pi/2 - angle_rad )
+            #whole_body.move_end_effector_pose(open_pose, _ROBOT_TF)
+            #angleeee=math.pi/2 - angle_rad
+            omni_base.go(d*math.sin(phi), d*math.cos(phi), math.pi/2 - angle_rad, 300.0, relative=True)
+            #omni_base.go(0.1, 0, 0, 300.0, relative=True)
 
             #second option for the push - trajectory?
             #omni_base.follow_trajectory([geometry.pose(x=1.0, y=0.0, ek=0.0), geometry.pose(x=1.0, y=1.0, ek=math.pi)], time_from_starts=[10, 20], ref_frame_id='base_footprint')
@@ -322,5 +328,6 @@ if __name__=='__main__':
         whole_body = robot.get('whole_body')
         gripper = robot.get('gripper')
         wrist_wrench = robot.get('wrist_wrench')
+        omni_base = robot.get('omni_base')
         listnerfunction()
         main(whole_body,  gripper,wrist_wrench)
