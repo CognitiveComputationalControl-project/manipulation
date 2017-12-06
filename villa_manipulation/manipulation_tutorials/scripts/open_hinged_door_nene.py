@@ -153,7 +153,7 @@ def main(whole_body, gripper,wrist_wrench):
 #    angle_Msg = rospy.wait_for_message("angle_detector", Float32)
 #    angle = angle_Msg.data 
 
-    #2.memorize the handle position when the door is closed
+    #2.READ THE HANDLE POSITION when the door is closed
 #    target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
 #    recog_pos.pose.position.x=target_pose_Msg.pose.position.x
 #    recog_pos.pose.position.y=target_pose_Msg.pose.position.y
@@ -219,11 +219,16 @@ def main(whole_body, gripper,wrist_wrench):
 
             whole_body.impedance_config = 'grasping'
 
-            #5.PUSH MOTION
-            whole_body.move_end_effector_by_line((0, 0, 1), 0.35)
-            whole_body.impedance_config= None
-           
-            gripper.command(1.0)
+       
+            #5.PUSH MOTION - he moves with the door - first option - streight movement 
+            phi = 90*(2*math.pi/360)
+            l = HANDLE_TO_DOOR_HINGE_POS
+            d = 2 * l *  math.cos(phi)
+            #open_pose = geometry.pose(x = d*math.sin(phi), y=d*math.cos(phi), ek=math.pi/2 - angle_rad )
+            #whole_body.move_end_effector_pose(open_pose, _ROBOT_TF)
+            #angleeee=math.pi/2 - angle_rad
+            omni_base.go(d*math.sin(phi), d*math.cos(phi), math.pi/2 - angle_rad, 300.0, relative=True)
+
             whole_body.move_to_neutral()
 
 
@@ -241,7 +246,7 @@ def main(whole_body, gripper,wrist_wrench):
             # whole_body.impedance_config= 'grasping' 
             switch = ImpedanceControlSwitch() 
             # wrist_wrench.reset() 
-            gripper.command(1.0) 
+            gripper.command(0.0) 
 
             #change coordinates of the handle - now the door is open so the handle is moved - the data of the handle position are given for the closed door - I m supposing 
             #that the coordinates of the handle are wrt the base_footprint tf 
@@ -252,16 +257,13 @@ def main(whole_body, gripper,wrist_wrench):
             recog_pos.pose.position.y = recog_pos.pose.position.y + d1 * math.cos(phi)
 
             grab_pose = geometry.multiply_tuples(geometry.pose(x=recog_pos.pose.position.x-HANDLE_TO_HAND_POS,
-                                                               y=recog_pos.pose.position.y,
+                                                               y=recog_pos.pose.position.y - 10,
                                                                z=recog_pos.pose.position.z,
                                                                ej=math.pi/2),
                                                  geometry.pose(ek=math.pi/2))
             whole_body.move_end_effector_pose(grab_pose, _ROBOT_TF)
             wrist_wrench.reset()
-            # whole_body.impedance_config= 'compliance_middle'
-            switch.activate("grasping")
-            # gripper.command(0.01)
-            gripper.grasp(-0.008)
+
             rospy.sleep(1.0)
             switch.inactivate()
 
@@ -275,48 +277,10 @@ def main(whole_body, gripper,wrist_wrench):
             phi = math.pi/4 + angle_rad/2
             l = HANDLE_TO_DOOR_HINGE_POS
             d = 2 * l *  math.cos(phi)
-            #open_pose = geometry.pose(x = d*math.sin(phi), y=d*math.cos(phi), ek=math.pi/2 - angle_rad )
-            #whole_body.move_end_effector_pose(open_pose, _ROBOT_TF)
-            #angleeee=math.pi/2 - angle_rad
+
             omni_base.go(d*math.sin(phi), d*math.cos(phi), math.pi/2 - angle_rad, 300.0, relative=True)
-            #omni_base.go(0.1, 0, 0, 300.0, relative=True)
 
-            #second option for the push - trajectory?
-            #omni_base.follow_trajectory([geometry.pose(x=1.0, y=0.0, ek=0.0), geometry.pose(x=1.0, y=1.0, ek=math.pi)], time_from_starts=[10, 20], ref_frame_id='base_footprint')
 
-            #third option for the push - back to the first code?
-            # origin_to_hand = get_relative_tuples(_ORIGIN_TF, _HAND_TF)           #T0h
-            # tsr_to_origin = geometry.pose(x=-HANDLE_POS[0],
-            #                             y=-(HANDLE_POS[1]-HANDLE_TO_DOOR_HINGE_POS),
-            #                             z=-HANDLE_POS[2]) #Twe
-            # tsr_to_hand = geometry.multiply_tuples(tsr_to_origin, origin_to_hand) #T0s'
-
-            # const_tsr = TaskSpaceRegion()
-            # const_tsr.end_frame_id = _HAND_TF
-            # const_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=HANDLE_POS[0],
-            #                                                                 y=HANDLE_POS[1]-HANDLE_TO_DOOR_HINGE_POS,
-            #                                                                 z=HANDLE_POS[2]))
-            # const_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-            # const_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, 0]
-            # const_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
-
-            # goal_tsr = TaskSpaceRegion()
-            # goal_tsr.end_frame_id = _HAND_TF
-            # goal_tsr.origin_to_tsr = geometry.tuples_to_pose(geometry.pose(x=HANDLE_POS[0],
-            #                                                                y=HANDLE_POS[1]-HANDLE_TO_DOOR_HINGE_POS,
-            #                                                                z=HANDLE_POS[2]))
-            # goal_tsr.tsr_to_end = geometry.tuples_to_pose(tsr_to_hand)
-            # goal_tsr.min_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
-            # goal_tsr.max_bounds = [0, 0.0, 0.0, 0, 0, math.pi/4]
-
-            # response = call_tsr_plan_service(whole_body, [const_tsr], [goal_tsr])
-            # if response.error_code.val != ArmManipulationErrorCodes.SUCCESS:
-            #     rospy.logerr("Planning failed: (Error Code {0})".format(response.error_code.val))
-            #     exit(-1)
-            # response.base_solution.header.frame_id = _ORIGIN_TF
-            # constrain_traj = whole_body._constrain_trajectories(response.solution,
-            #                                                     response.base_solution)
-            # whole_body._execute_trajectory(constrain_traj)
  
 
 
