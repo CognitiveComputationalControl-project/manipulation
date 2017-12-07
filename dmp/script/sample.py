@@ -60,7 +60,6 @@ def makePlanRequest(x_0, x_dot_0, t_0, goal, goal_thresh,
             
     return resp;
 
-
 if __name__ == '__main__':
     rospy.init_node('dmp_tutorial_node')
 
