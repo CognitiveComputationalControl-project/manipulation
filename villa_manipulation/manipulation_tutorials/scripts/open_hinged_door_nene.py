@@ -16,6 +16,7 @@ import trajectory_msgs.msg
 import moveit_msgs
 from copy import deepcopy
 import controller_manager_msgs.srv
+from handle_tracking.srv import objectfinder
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import PoseStamped
 from tmc_planning_msgs.srv import PlanWithTsrConstraints
@@ -26,11 +27,14 @@ from tmc_manipulation_msgs.msg import (
     BaseMovementType,
     ArmManipulationErrorCodes
 )
+from std_msgs.msg import Float64
+
+
 
 _TF_TIMEOUT = 3.5
 _ODOM_TF = 'odom'
 # _ORIGIN_TF ='map'
-_ORIGIN_TF ='odom'
+_ORIGIN_TF ='map'
 _ROBOT_TF = 'base_footprint'
 _HAND_TF = 'hand_palm_link'
 
@@ -52,15 +56,15 @@ HANDLE_TO_HANDLE_HINGE_POS = -0.06
 HANDLE_TO_HAND_POS = 0.067
 HANDLE_GOAL_OFFSET = 0.5
 recog_pos = geometry_msgs.msg.PoseStamped()
-#recog_pos.pose.position.x=0.00
-#recog_pos.pose.position.y=-0.0
-#recog_pos.pose.position.z=0.0
+recog_pos.pose.position.x=0.00
+recog_pos.pose.position.y=-0.0
+recog_pos.pose.position.z=0.0
 cur_arm_lift_joint=0.0
 cur_wrist_roll_joint=0.0
-angle=30
-recog_pos.pose.position.x=1.14
-recog_pos.pose.position.y=-0.3
-recog_pos.pose.position.z=0.947
+angle=0.0
+# recog_pos.pose.position.x=1.13231585073
+# recog_pos.pose.position.y=--0.196768251403
+# recog_pos.pose.position.z=0.943785846275
 
 def publish_arm(lift, flex,roll,wrist_flex,wrist_roll):
     traj = JointTrajectory()
@@ -122,11 +126,31 @@ def get_relative_tuples(base_frame, target_frame):
     tuples = geometry.transform_to_tuples(trans)
     return tuples
 
-def grasp_point_callback(msg):
-    recog_pos.pose.position.x=msg.pose.position.x
-    recog_pos.pose.position.y=msg.pose.position.y
-    recog_pos.pose.position.z=msg.pose.position.z
+def grasp_point_client():
+    # rospy.wait_for_service('localize_handle')
+    try:
+        print "calling service"
+        localize_handle = rospy.ServiceProxy('/track_handle', objectfinder)
+        Response = localize_handle()
+        recog_pos=Response.best_grasp_pose
+        Is_found = Response.handle_is_found
+
+        print recog_pos.pose
+         
+    except rospy.ServiceException, e:
+        print "Service grasp point call failes: %s"%e 
+
+#def usage():
+#return "%s handle" %sys.argv[0] 
+
+
+
+#def grasp_point_callback(msg):
+#    recog_pos.pose.position.x=msg.pose.position.x
+#    recog_pos.pose.position.y=msg.pose.position.y
+#    recog_pos.pose.position.z=msg.pose.position.z
     # dkldsaflk;print recog_pos.pose.position
+
 def joint_states_callback(msg):
     global latest_positions
     positions = {}
@@ -134,32 +158,35 @@ def joint_states_callback(msg):
         positions[name] = msg.position[i]
     latest_positions = positions
 
-def angle_callback(msg):
+def angle_callback(msg): 
     angle = msg.data
 
 def listnerfunction():
     # rospy.init_node('listener',anonymous=True)
-    rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
+    #rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
     rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
-    #rospy.Subscriber("hsrb/angle_detector", Float32 ,angle_callback)
+    rospy.Subscriber("angle_detector", Float64 ,angle_callback)
 
 def main(whole_body, gripper,wrist_wrench):
 
 
-    
+    rospy.sleep(5)
+
     armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
 
-#    #1.READ THE ANGLE (topic angle_detector)
-#    angle_Msg = rospy.wait_for_message("angle_detector", Float32)
-#    angle = angle_Msg.data 
 
-    #2.READ THE HANDLE POSITION when the door is closed
-#    target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
-#    recog_pos.pose.position.x=target_pose_Msg.pose.position.x
-#    recog_pos.pose.position.y=target_pose_Msg.pose.position.y
-#    recog_pos.pose.position.z=target_pose_Msg.pose.position.z
 
-    if (angle > -0.1 and angle < 0.2 ): #the door is closed
+    #1.READ THE ANGLE (topic angle_detector)
+    #angle_Msg = rospy.wait_for_message("angle_detector", Float64)
+    #angle = angle_Msg.data 
+
+    #2.READ THE HANDLE POSITION when the door is closed - SERVICE!!! 
+    #target_pose_Msg = rospy.wait_for_message("localize_handle", PoseStamped)
+    #recog_pos.pose.position.x=target_pose_Msg.pose.position.x
+    #recog_pos.pose.position.y=target_pose_Msg.pose.position.y
+    #recog_pos.pose.position.z=target_pose_Msg.pose.position.z
+
+    if (angle > -1 and angle < 4 ): #the door is closed
 
 
             ##3.GRAB THE DOOR HANDLE
@@ -174,7 +201,8 @@ def main(whole_body, gripper,wrist_wrench):
                                                                z=recog_pos.pose.position.z,
                                                                ej=math.pi/2),
                                                  geometry.pose(ek=math.pi/2))
-            whole_body.move_end_effector_pose(grab_pose, _ROBOT_TF)
+
+            whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
             wrist_wrench.reset()
             # whole_body.impedance_config= 'compliance_middle'
             switch.activate("grasping")
@@ -233,7 +261,7 @@ def main(whole_body, gripper,wrist_wrench):
 
 
 
-    elif (angle >= 0.2 and angle < 60 ): #the door is half-open
+    elif (angle >= 4 and angle < 60 ): #the door is half-open
 
 
 
@@ -261,7 +289,7 @@ def main(whole_body, gripper,wrist_wrench):
                                                                z=recog_pos.pose.position.z,
                                                                ej=math.pi/2),
                                                  geometry.pose(ek=math.pi/2))
-            whole_body.move_end_effector_pose(grab_pose, _ROBOT_TF)
+            whole_body.move_end_effector_pose(grab_pose, _ORIGIN_TF)
             wrist_wrench.reset()
 
             rospy.sleep(1.0)
@@ -285,13 +313,19 @@ def main(whole_body, gripper,wrist_wrench):
 
 
 
-
-
 if __name__=='__main__':
     with hsrb_interface.Robot() as robot:
         whole_body = robot.get('whole_body')
+        rospy.loginfo("ciao")
         gripper = robot.get('gripper')
+        rospy.loginfo("ciao")
         wrist_wrench = robot.get('wrist_wrench')
+        rospy.loginfo("ciao")
         omni_base = robot.get('omni_base')
+        rospy.loginfo("ciao")
         listnerfunction()
+        rospy.loginfo("angle is detected")
+        grasp_point_client()
+        rospy.loginfo("handle is detected")
+
         main(whole_body,  gripper,wrist_wrench)
