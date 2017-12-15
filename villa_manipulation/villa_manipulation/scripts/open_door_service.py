@@ -28,9 +28,9 @@ from tmc_manipulation_msgs.msg import (
 )
 
 _TF_TIMEOUT = 3.5
-_ODOM_TF = 'odom'
+_ODOM_TF = 'map'
 # _ORIGIN_TF ='map'
-_ORIGIN_TF ='odom'
+_ORIGIN_TF ='map'
 _ROBOT_TF = 'base_footprint'
 _HAND_TF = 'hand_palm_link'
 
@@ -224,7 +224,7 @@ def opendoor(req):
 	return res
 
 def opendoor_server():
-        rospy.init_node('opendoor_server_node')
+        # rospy.init_node('opendoor_server_node')
         rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
         s = rospy.Service('open_door_service', Opendoor, opendoor)
         rospy.spin()

@@ -118,5 +118,3 @@ if __name__=='__main__':
 	rospy.init_node('handOver_server')
 	s = rospy.Service('handOver', handOverObject, handOver_cb)
 	rospy.spin()
-
-

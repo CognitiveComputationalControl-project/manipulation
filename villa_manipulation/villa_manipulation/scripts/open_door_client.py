@@ -27,9 +27,9 @@ _VIEW_POSITIONS = {'head_pan_joint': -1.0,
 
 latest_positions = None
 recog_pos = geometry_msgs.msg.PoseStamped()
-recog_pos.pose.position.x=0.40
-recog_pos.pose.position.y=-0.0
-recog_pos.pose.position.z=0.8
+# recog_pos.pose.position.x=0.40
+# recog_pos.pose.position.y=-0.0
+# recog_pos.pose.position.z=0.8
 
 
 # def joint_states_callback(msg):
@@ -55,6 +55,12 @@ def mains():
         open_door_client = rospy.ServiceProxy(_OPENDOOR_SRV_NAME,Opendoor)
         # Get the grasp patterns
         open_door_req = OpendoorRequest()
+        target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
+        recog_pos.pose.position.x=target_pose_Msg.pose.position.x
+        recog_pos.pose.position.y=target_pose_Msg.pose.position.y
+        recog_pos.pose.position.z=target_pose_Msg.pose.position.z
+
+
         open_door_req.handle_pose=recog_pos
         print recog_pos
         open_door_req.angle=0.0
