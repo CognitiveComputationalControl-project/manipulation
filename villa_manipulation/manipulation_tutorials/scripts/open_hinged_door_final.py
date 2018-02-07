@@ -282,7 +282,8 @@ def main(whole_body, base, gripper,wrist_wrench):
     vel_pub.publish(tw_cmd2)
     rospy.sleep(4.0) 
     whole_body.move_to_neutral()
-    ## Move back  3
+    ## Move back  
+    
     tw_cmd2= geometry_msgs.msg.Twist()
     tw_cmd2.linear.x =-0.6
     tw_cmd2.angular.z =-0.3
