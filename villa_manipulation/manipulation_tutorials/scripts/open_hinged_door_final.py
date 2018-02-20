@@ -197,8 +197,6 @@ def main(whole_body, base, gripper,wrist_wrench):
     # recog_pos.pose.position.y=target_pose_Msg.pose.position.y
     # recog_pos.pose.position.z=target_pose_Msg.pose.position.z
 
-
-
     whole_body.move_to_neutral()
     # whole_body.impedance_config= 'grasping'
     switch = ImpedanceControlSwitch() 
