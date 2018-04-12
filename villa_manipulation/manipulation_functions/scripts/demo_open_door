@@ -37,7 +37,6 @@ from tmc_manipulation_msgs.msg import (
 
 _TF_TIMEOUT = 3.5
 _ODOM_TF = 'map'
-# _ORIGIN_TF ='map'
 _ORIGIN_TF ='map'
 _ROBOT_TF = 'base_footprint'
 _HAND_TF = 'hand_palm_link'
@@ -186,7 +185,6 @@ def main(whole_body, base, gripper,wrist_wrench):
     cli = actionlib.SimpleActionClient('/hsrb/omni_base_controller/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)
     # publisher for delvering command for base move
     vel_pub = rospy.Publisher('/hsrb/command_velocity', geometry_msgs.msg.Twist, queue_size=10)
-    # base_pub = rospy.Publisher('/move_base/move/goal',move_base_msgs.msg.MoveBaseActionGoal,queue_size=10)
     
     armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
     ## Grab the handle of door
@@ -288,15 +286,6 @@ def main(whole_body, base, gripper,wrist_wrench):
     # rospy.sleep(4.0)   
     rospy.sleep(2.0) 
 
-    # tw_cmd3 = geometry_msgs.msg.Twist()
-    # tw_cmd3.linear.x =0.75
-    # tw_cmd3.linear.y =0.25
-    # tw_cmd3.angular.z = 0.05
-    # vel_pub.publish(tw_cmd3)
-    # rospy.sleep(4.0)   
-    # rospy.sleep(2.0) 
-
-
     ## Open the gripper
     gripper.command(1.0)
     
@@ -304,15 +293,10 @@ def main(whole_body, base, gripper,wrist_wrench):
     base.go_rel(-1.0,0.0,start_theta)
 
     ## Move back2
-    # tw_cmd2= geometry_msgs.msg.Twist()
-    # tw_cmd2.linear.x =-1.1
-    # tw_cmd2.angular.z =-0.4
-    # vel_pub.publish(tw_cmd2)
-    # rospy.sleep(4.0) 
     whole_body.move_to_neutral()
     
     # navigate back to position w.r.t map frame
-    navi_service_client(2.0, 0.0, 0.0)
+    # navi_service_client(2.0, 0.0, 0.0)
 
 if __name__=='__main__':
     with hsrb_interface.Robot() as robot:

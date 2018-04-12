@@ -67,6 +67,13 @@ HANDLE_TO_HAND_POS_Y=0.012
 
 recog_pos = geometry_msgs.msg.PoseStamped()
 
+cur_arm_lift_joint=0.0
+cur_wrist_roll_joint=0.0
+
+# recog_pos.pose.position.x=0.30
+# recog_pos.pose.position.y=0.2
+# recog_pos.pose.position.z=0.947
+
 def publish_arm(lift, flex,roll,wrist_flex,wrist_roll):
     traj = JointTrajectory()
     # This controller requires that all joints have values
@@ -154,7 +161,7 @@ def grasp_point_client():
 def navi_service_client(x_,y_,theta_):
     try:
         print "calling navi service"
-        nav_srv_client = rospy.ServiceProxy("navi_go_base", GoTargetPos)
+        nav_srv_client = rospy.ServiceProxy("navi_go_base", GoTargetPos_rel)
         nav_req=GoTargetPosRequest()
         nav_req.x_from_map=x_
         nav_req.y_from_map=y_
@@ -163,6 +170,8 @@ def navi_service_client(x_,y_,theta_):
 
     except rospy.ServiceException, e:
         print "navi service failed"
+# self.nav_srv_client = rospy.ServiceProxy("navi_go_base", GoTargetPos_rel)
+
 
 def grasp_point_callback(msg):
     recog_pos.pose.position.x=msg.pose.position.x
@@ -177,12 +186,12 @@ def joint_states_callback(msg):
     latest_positions = positions
 
 def listnerfunction():
+    # rospy.init_node('listener',anonymous=True)
     # rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
     rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
 
 def main(whole_body, base, gripper,wrist_wrench):
     
-    whole_body.move_to_neutral()
     cli = actionlib.SimpleActionClient('/hsrb/omni_base_controller/follow_joint_trajectory', control_msgs.msg.FollowJointTrajectoryAction)
     # publisher for delvering command for base move
     vel_pub = rospy.Publisher('/hsrb/command_velocity', geometry_msgs.msg.Twist, queue_size=10)
@@ -191,7 +200,6 @@ def main(whole_body, base, gripper,wrist_wrench):
     armPub = rospy.Publisher('/hsrb/arm_trajectory_controller/command', JointTrajectory, queue_size=1)
     ## Grab the handle of door
     
-    start_theta=base.pose[2]
     #test with service - get the handle position from handle
     grasp_point_client()
 
@@ -205,8 +213,6 @@ def main(whole_body, base, gripper,wrist_wrench):
     # recog_pos.pose.position.z=target_pose_Msg.pose.position.z
 
     whole_body.move_to_neutral()
-    rospy.sleep(2.5)
-
     # whole_body.impedance_config= 'grasping'
     switch = ImpedanceControlSwitch() 
     # wrist_wrench.reset()
@@ -239,7 +245,7 @@ def main(whole_body, base, gripper,wrist_wrench):
                         "arm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
     p = JointTrajectoryPoint()
     current_positions = [latest_positions[name] for name in traj.joint_names]
-    current_positions[0] = latest_positions["arm_lift_joint"]-0.0675
+    current_positions[0] = latest_positions["arm_lift_joint"]-0.07
     current_positions[1] = latest_positions["arm_flex_joint"]-0.02
     current_positions[2] = latest_positions["arm_roll_joint"]
     current_positions[3] = latest_positions["wrist_flex_joint"]
@@ -252,12 +258,11 @@ def main(whole_body, base, gripper,wrist_wrench):
     armPub.publish(traj)
 
     rospy.sleep(3.0)
-    print("finishing rotating handle") 
+    
     ## Move by End-effector line
     whole_body.impedance_config = 'compliance_hard'
     whole_body.move_end_effector_by_line((0.0,0.0,1), 0.45)
    
-    print("push the door") 
     ## Move base with linear & Angular motion
     tw = geometry_msgs.msg.Twist()
     tw.linear.x =0.9
@@ -267,52 +272,38 @@ def main(whole_body, base, gripper,wrist_wrench):
     
     ## Move base with linear & Angular motion second
     tw_cmd0 = geometry_msgs.msg.Twist()
-    tw_cmd0.linear.x =0.5
+    tw_cmd0.linear.x =0.3
     tw_cmd0.angular.z = 0.45
     vel_pub.publish(tw_cmd0)
-    rospy.sleep(2.0) 
-
-    tw_cmd1 = geometry_msgs.msg.Twist()
-    tw_cmd1.linear.x =0.6
-    tw_cmd1.linear.y =0.2
-    tw_cmd1.angular.z = 0.25
-    vel_pub.publish(tw_cmd1)
     # rospy.sleep(4.0)   
-    rospy.sleep(3.0) 
-
-    tw_cmd2 = geometry_msgs.msg.Twist()
-    tw_cmd2.linear.x =0.65
-    tw_cmd2.linear.y =0.5
-    tw_cmd2.angular.z = 0.35
-    vel_pub.publish(tw_cmd2)
-    # rospy.sleep(4.0)   
-    rospy.sleep(2.0) 
-
-    # tw_cmd3 = geometry_msgs.msg.Twist()
-    # tw_cmd3.linear.x =0.75
-    # tw_cmd3.linear.y =0.25
-    # tw_cmd3.angular.z = 0.05
-    # vel_pub.publish(tw_cmd3)
-    # rospy.sleep(4.0)   
-    # rospy.sleep(2.0) 
-
+   
+    rospy.sleep(4.0) 
 
     ## Open the gripper
     gripper.command(1.0)
     
     ## Move back 
-    base.go_rel(-1.0,0.0,start_theta)
+    tw_cmd = geometry_msgs.msg.Twist()
+    tw_cmd.linear.x =-1.2
+    vel_pub.publish(tw_cmd)
+    rospy.sleep(2.0) 
 
-    ## Move back2
-    # tw_cmd2= geometry_msgs.msg.Twist()
-    # tw_cmd2.linear.x =-1.1
-    # tw_cmd2.angular.z =-0.4
-    # vel_pub.publish(tw_cmd2)
-    # rospy.sleep(4.0) 
+    ## Move back  2
+    tw_cmd2= geometry_msgs.msg.Twist()
+    tw_cmd2.linear.x =-1.1
+    tw_cmd2.angular.z =-0.4
+    vel_pub.publish(tw_cmd2)
+    rospy.sleep(4.0) 
     whole_body.move_to_neutral()
+    ## Move back  
     
-    # navigate back to position w.r.t map frame
+    tw_cmd2= geometry_msgs.msg.Twist()
+    tw_cmd2.linear.x =-0.6
+    tw_cmd2.angular.z =-0.3
+    vel_pub.publish(tw_cmd2)
+
     navi_service_client(2.0, 0.0, 0.0)
+
 
 if __name__=='__main__':
     with hsrb_interface.Robot() as robot:

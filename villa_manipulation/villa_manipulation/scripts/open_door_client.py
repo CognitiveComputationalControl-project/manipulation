@@ -27,17 +27,7 @@ _VIEW_POSITIONS = {'head_pan_joint': -1.0,
 
 latest_positions = None
 recog_pos = geometry_msgs.msg.PoseStamped()
-# recog_pos.pose.position.x=0.40
-# recog_pos.pose.position.y=-0.0
-# recog_pos.pose.position.z=0.8
 
-
-# def joint_states_callback(msg):
-#     global latest_positions
-#     positions = {}
-#     for name, i in zip(msg.name, range(len(msg.name))):
-#         positions[name] = msg.position[i]
-#     latest_positions = positions
 
 def grasp_point_callback(msg):
     recog_pos.pose.position.x=msg.pose.position.x
@@ -60,7 +50,6 @@ def mains():
         recog_pos.pose.position.y=target_pose_Msg.pose.position.y
         recog_pos.pose.position.z=target_pose_Msg.pose.position.z
 
-
         open_door_req.handle_pose=recog_pos
         print recog_pos
         open_door_req.angle=0.0
@@ -81,9 +70,5 @@ def mains():
     # whole_body.move_to_neutral()
 
 if __name__ == '__main__':
-    # rospy.Subscriber("hsrb/joint_states",JointState,joint_states_callback)
     rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
     mains()
-    # with hsrb_interface.Robot() as robot:
-        # whole_body = robot.get('whole_body')
-        # gripper = robot.get('gripper')
