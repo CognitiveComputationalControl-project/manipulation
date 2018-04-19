@@ -209,6 +209,7 @@ def opendoor(req):
         gripper = robot.get('gripper')
         wrist_wrench = robot.get('wrist_wrench')
         base=robot.get('omni_base')
+        start_theta=base.pose[2]
 	# with hsrb_interface.Robot() as robot:
             # whole_body = robot.get('whole_body')
             # gripper = robot.get('gripper')
@@ -216,6 +217,7 @@ def opendoor(req):
 
 	try: 
 		# Open the gripper 
+                whole_body.move_to_neutral()
                 grasp_point_client()
                 global recog_pos
                 global is_found
@@ -303,7 +305,7 @@ def opendoor(req):
                 gripper.command(1.0)
     
                 ## Move back 
-                base.go_rel(-1.0,0.0,start_theta)
+                base.go_rel(-1.3,0.0,start_theta)
 
                 gripper.command(1.0)
                 whole_body.move_to_neutral()

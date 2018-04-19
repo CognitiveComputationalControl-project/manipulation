@@ -45,10 +45,13 @@ def mains():
         open_door_client = rospy.ServiceProxy(_OPENDOOR_SRV_NAME,Opendoor)
         # Get the grasp patterns
         open_door_req = OpendoorRequest()
-        target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
-        recog_pos.pose.position.x=target_pose_Msg.pose.position.x
-        recog_pos.pose.position.y=target_pose_Msg.pose.position.y
-        recog_pos.pose.position.z=target_pose_Msg.pose.position.z
+        # target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
+        # recog_pos.pose.position.x=target_pose_Msg.pose.position.x
+        # recog_pos.pose.position.y=target_pose_Msg.pose.position.y
+        # recog_pos.pose.position.z=target_pose_Msg.pose.position.z
+        recog_pos.pose.position.x=0.0
+        recog_pos.pose.position.y=0.0
+        recog_pos.pose.position.z=0.0
 
         open_door_req.handle_pose=recog_pos
         print recog_pos
