@@ -1,25 +1,25 @@
 # manipulation
-### Demo for opening door
+## Demo for opening door
 
 Robot should be localized first w.r.t map - laucnh full-version rviz
 
 ```
 viz_full
 ```
-## Calling handle & manipulation service server
+### Call handle & manipulation service server
 
 ```
 roslaunch villa_manipulation open_door_task.launch
 ```
 
-## Calling waypoint navigation service server
+### Call waypoint navigation service server
 
 ```
 roslaunch villa_navi_service waypoint.launch
 ```
 
 
-## Calling Client for service
+## Call client for service
 
 ```
 rosrun villa_manipulation nav_open_door_client.py
@@ -27,7 +27,8 @@ rosrun villa_manipulation nav_open_door_client.py
 
 
 
-### Individual Service
+
+# Individual Service
 
 
 Run handle_localization sensor 
@@ -40,6 +41,12 @@ Run ros service server to find door handle
 
 ```
 rosrun handle_tracking scanner
+```
+
+Run ros service server for opening_door
+
+```
+rosrun villa_manipulation open_door_service.py
 ```
 
 Run ros service client && opening door code
