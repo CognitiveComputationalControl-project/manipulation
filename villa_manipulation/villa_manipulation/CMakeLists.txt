@@ -17,24 +17,32 @@ find_package(catkin REQUIRED COMPONENTS
   tmc_eigen_bridge
   tmc_manipulation_types_bridge
   tmc_utils
+  actionlib_msgs
+  actionlib
 )
+
 
 catkin_python_setup()
 
+
 ## Generate services in the 'srv' folder
- add_service_files(
+add_service_files(
    FILES
    Pickup.srv
    BroadcastObjectFrames.srv
-   Opendoor.srv
  )
-
+add_action_files(DIRECTORY action FILES OpenDoor.action)
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
+generate_messages(
    DEPENDENCIES
    std_msgs
    geometry_msgs
+   actionlib_msgs
  )
+
+find_package(catkin REQUIRED genmsg actionlib_msgs actionlib)
+
+
 
 catkin_package(
   CATKIN_DEPENDS

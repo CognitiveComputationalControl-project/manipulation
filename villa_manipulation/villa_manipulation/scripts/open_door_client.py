@@ -1,5 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import roslib
+roslib.load_manifest('villa_manipulation')
+import actionlib
+from villa_manipulation.msg import OpenDoorAction , OpenDoorGoal
+
 import hsrb_interface
 from hsrb_interface import geometry
 import rospy
@@ -40,38 +45,55 @@ def grasp_point_callback(msg):
 
 def mains():
     # Initialize
-    rospy.wait_for_service(_OPENDOOR_SRV_NAME)  
-    try:
-        open_door_client = rospy.ServiceProxy(_OPENDOOR_SRV_NAME,Opendoor)
-        # Get the grasp patterns
-        open_door_req = OpendoorRequest()
-        # target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
-        # recog_pos.pose.position.x=target_pose_Msg.pose.position.x
-        # recog_pos.pose.position.y=target_pose_Msg.pose.position.y
-        # recog_pos.pose.position.z=target_pose_Msg.pose.position.z
-        recog_pos.pose.position.x=0.0
-        recog_pos.pose.position.y=0.0
-        recog_pos.pose.position.z=0.0
+    print("Initiliazing the node")
+    rospy.init_node('open_door_client')
+    client = actionlib.SimpleActionClient('open_door', OpenDoorAction)
+    print("waiting for server")
+    client.wait_for_server()
+    print("Server reached")
+    recog_pos.pose.position.x=0.0
+    recog_pos.pose.position.y=0.0
+    recog_pos.pose.position.z=0.0
+    send = OpenDoorGoal()
+    # Fill in the goal here
+    print("Sending goal")
+    client.send_goal(send)
+    print("waiting for results")
+    client.wait_for_result(rospy.Duration.from_sec(60.0))
 
-        open_door_req.handle_pose=recog_pos
-        print recog_pos
-        open_door_req.angle=0.0
-        open_door_req.push=True
-        try:
-            res = open_door_client(open_door_req)    
-        except rospy.ServiceException as e:
-            rospy.logerr(e)
-            exit(1)
-        if res.success==False:
-            rospy.logerr('Failed')
-            exit(1)
-            # open_door_client.wait_for_service(timeout=_CONNECTION_TIMEOUT)
-    except Exception as e:
-        rospy.logerr(e)
-        sys.exit(1)
+    # rospy.wait_for_service(_OPENDOOR_SRV_NAME)  
+    # try:
+    #     open_door_client = rospy.ServiceProxy(_OPENDOOR_SRV_NAME,Opendoor)
+    #     # Get the grasp patterns
+    #     open_door_req = OpendoorRequest()
+    #     # target_pose_Msg = rospy.wait_for_message("/handle_detector/grasp_point", PoseStamped)
+    #     # recog_pos.pose.position.x=target_pose_Msg.pose.position.x
+    #     # recog_pos.pose.position.y=target_pose_Msg.pose.position.y
+    #     # recog_pos.pose.position.z=target_pose_Msg.pose.position.z
+    #     recog_pos.pose.position.x=0.0
+    #     recog_pos.pose.position.y=0.0
+    #     recog_pos.pose.position.z=0.0
+
+    #     open_door_req.handle_pose=recog_pos
+    #     print recog_pos
+    #     open_door_req.angle=0.0
+    #     open_door_req.push=True
+    #     try:
+    #         res = open_door_client(open_door_req)    
+    #     except rospy.ServiceException as e:
+    #         rospy.logerr(e)
+    #         exit(1)
+    #     if res.success==False:
+    #         rospy.logerr('Failed')
+    #         exit(1)
+    #         # open_door_client.wait_for_service(timeout=_CONNECTION_TIMEOUT)
+    # except Exception as e:
+    #     rospy.logerr(e)
+    #     sys.exit(1)
 
     # whole_body.move_to_neutral()
 
 if __name__ == '__main__':
     rospy.Subscriber("handle_detector/grasp_point",PoseStamped,grasp_point_callback)
+
     mains()

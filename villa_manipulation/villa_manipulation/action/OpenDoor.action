@@ -1,0 +1,8 @@
+# Define the goal
+bool goal
+---
+# Define the result
+bool status
+---
+# Define a feedback message
+float32 step
